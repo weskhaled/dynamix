@@ -13,6 +13,8 @@ const config = require('./config');
 
 const assetsFilenames = (config.enabled.cacheBusting) ? config.cacheBusting : '[name]';
 
+const { VueLoaderPlugin } = require('vue-loader');
+
 let webpackConfig = {
   context: config.paths.assets,
   entry: config.entry,
@@ -118,6 +120,10 @@ let webpackConfig = {
           name: `${config.cacheBusting}.[ext]`,
         },
       },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
     ],
   },
   resolve: {
@@ -126,6 +132,9 @@ let webpackConfig = {
       'node_modules',
     ],
     enforceExtension: false,
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    },
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
@@ -164,6 +173,7 @@ let webpackConfig = {
       debug: config.enabled.watcher,
       stats: { colors: true },
     }),
+    new VueLoaderPlugin(),
     new webpack.LoaderOptionsPlugin({
       test: /\.s?css$/,
       options: {
@@ -177,10 +187,10 @@ let webpackConfig = {
         eslint: { failOnWarning: false, failOnError: true },
       },
     }),
-    new StyleLintPlugin({
-      failOnError: !config.enabled.watcher,
-      syntax: 'scss',
-    }),
+    // new StyleLintPlugin({
+    //   failOnError: !config.enabled.watcher,
+    //   syntax: 'scss',
+    // }),
     new FriendlyErrorsWebpackPlugin(),
   ],
 };
