@@ -1,0 +1,49 @@
+// /*
+// 17) footer
+// */
+.page-content {
+  > footer {
+    > .footer-container {
+			background-color: #6b5488;
+			color: white;
+			position: relative;
+			z-index: 1;
+			h5 {
+				font-size: 14px;
+				font-weight: 600;
+				margin: 10px 0 25px 0;		
+			}
+			.recent-posts .media-heading {
+					font-size: 15px;
+					color: white;
+				}
+    }
+	}
+	p {
+		color: #fff;
+	}
+	.copyrights {
+		background-color: #3c304c;
+		p {
+				margin: 0;
+				padding: 20px 0;
+		}
+		.social-icon {
+				color: #fff;
+		}
+	}
+}
+
+// responsive
+@media (min-width: 768px) {
+	.page-content > footer .copyrights {
+		position: fixed;
+		left: 0;
+		width: 100%;
+		bottom: 0;
+		z-index: 0;
+	}
+	.page-content > footer > .footer-container {
+		margin-bottom: 60px;
+	}
+}
