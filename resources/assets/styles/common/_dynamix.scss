@@ -1135,53 +1135,6 @@ body > .page-content > header {
   z-index: 100;
   background-color: white;
 }
-/*
-17) footer
-*/
-.page-content > footer > .footer-container {
-    background-color: #6b5488;
-    color: white;
-    position: relative;
-    z-index: 1;
-  }
-  .page-content > footer > .footer-container h5 {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 10px 0 25px 0;
-  }
-  .page-content > footer > .footer-container .recent-posts .media-heading {
-    font-size: 15px;
-    color: white;
-  }
-  .page-content > footer p {
-    color: #fff;
-  }
-  .page-content > footer .copyrights {
-    background-color: #3c304c;
-  }
-  .page-content > footer .copyrights p {
-    margin: 0;
-    padding: 20px 0;
-  }
-  .page-content > footer .copyrights .social-icon {
-    color: #fff;
-  }
-  
-  @media (min-width: 768px) {
-    .page-content > footer .copyrights {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      bottom: 0;
-      z-index: 0;
-    }
-  
-    .page-content > footer > .footer-container {
-      margin-bottom: 60px;
-    }
-  }
-  
-
 
 /*widget styling*/
 /*tagcloud styling */

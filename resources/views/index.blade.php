@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<div id="app">
-  <card></card>
-</div>
 @section('content')
   @include('partials.page-header')
 
