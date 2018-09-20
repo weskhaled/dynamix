@@ -10,6 +10,11 @@
  * @see https://github.com/webpack-contrib/sass-loader#imports
  */
 // @import "~some-node-module";
+@import 'fonts/et-line-font.css';
+@import 'fonts/feather-icons.css';
+@import 'fonts/pages-icons.css';
+
+@import '~swiper/dist/css/swiper.min.css';
 
 /** Import theme styles */
 @import "common/dynamix";

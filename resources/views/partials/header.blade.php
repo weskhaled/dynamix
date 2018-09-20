@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="img/logo.png" width="150" height="35" alt="">
+                <img src="@asset('images/logo.png')" width="150" height="35" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

@@ -216,16 +216,6 @@ a {
     background: linear-gradient(45deg, #2b0b4b 0%, rgba(43, 11, 75, 0) 70%), linear-gradient(135deg, #033645 10%, rgba(3, 54, 69, 0) 80%), linear-gradient(225deg, #071e3b 10%, rgba(7, 30, 59, 0) 80%), linear-gradient(315deg, #272919 100%, rgba(39, 41, 25, 0) 70%);
     background-color: #000;
    }
-    // .bg-space{
-    //  background-image: url(../img/bg-space.jpg);
-    //  background-repeat: no-repeat;
-    //  background-color: #000;
-    // }
-    // .bg-blur{
-    //  background-image: url(../img/bg-blur.jpg);
-    //  background-repeat: no-repeat;
-    //  background-color: #000!important;
-    // }
    .bg-grey{
     background-color: #f7f7f7!important;
    }
@@ -238,12 +228,12 @@ a {
    .bg-black{
     background-color: #000!important;
    }
-//    .bg-city {
-//     background-image: url(../img/city.jpg);
-//     background-repeat: no-repeat;
-//     background-attachment: fixed !important;
-//     background-color: #000!important;
-// }
+   .bg-city {
+    background-image: url(../images/city.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed !important;
+    background-color: #000!important;
+}
    .back-35 {
     background-color: rgba(0, 0, 0, 0.35);
    }
@@ -291,18 +281,18 @@ a {
     opacity: 0.2;
    }
 
-//    .pattern-icons{
-//     background-image: url(../img/patterns/icons.png);
-//     background-repeat: repeat;
-//     background-attachment: fixed;
-//     background-color: #07F!important;
-// }
-// .pattern-faces{
-//         background-image: url(../img/patterns/faces.jpg);
-//         background-repeat: repeat;
-//         background-attachment: fixed;
-//         background-color: #07F!important;
-// }
+   .pattern-icons{
+    background-image: url(../images/patterns/icons.png);
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-color: #07F!important;
+}
+.pattern-faces{
+        background-image: url(../images/patterns/faces.jpg);
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-color: #07F!important;
+}
    
 
 .container-inner {
@@ -313,6 +303,8 @@ a {
 }
    /* header*/
 body > .page-content > header {
+  position: relative;
+  z-index: 99;
     width: 100%;
     padding: 0;
     font-size: 100%;
