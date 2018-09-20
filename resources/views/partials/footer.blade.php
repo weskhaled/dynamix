@@ -109,16 +109,16 @@
                 <div class="col-sm-6">
                     <div class="social-icons text-right clearfix">
                         <a href="#" class="social-icon si-small si-facebook">
-                            <i class="fab fa-facebook-f"></i>
+                            <i class="fa fa-facebook"></i>
                         </a>
                         <a href="#" class="social-icon si-small si-twitter">
-                            <i class="fab fa-twitter"></i>
+                            <i class="fa fa-twitter"></i>
                         </a>
                         <a href="#" class="social-icon si-small si-github">
-                            <i class="fab fa-github"></i>
+                            <i class="fa fa-github"></i>
                         </a>
                         <a href="#" class="social-icon si-small si-linkedin">
-                            <i class="fab fa-linkedin-in"></i>
+                            <i class="fa fa-linkedin"></i>
                         </a>
                     </div>
                 </div>

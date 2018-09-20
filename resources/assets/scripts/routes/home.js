@@ -30,18 +30,18 @@ export default {
         type: 'bullets',
       },
     });
-    // var partnersswiper = new Swiper('#partners-slider', {
-    //   speed: 400,
-    //   slidesPerView: 'auto',
-    //   spaceBetween: 30,
-    //   grabCursor: true,
-    //   freeMode: true,
-    //   loop: true,
-    //   // scrollbar: {
-    //   //   el: '.swiper-scrollbar',
-    //   //   draggable: true,
-    //   // },
-    // });
+    new Swiper('#partners-slider', {
+      speed: 400,
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      grabCursor: true,
+      freeMode: true,
+      loop: true,
+      // scrollbar: {
+      //   el: '.swiper-scrollbar',
+      //   draggable: true,
+      // },
+    });
   },
   finalize() {
     // JavaScript to be fired on the home page, after the init JS

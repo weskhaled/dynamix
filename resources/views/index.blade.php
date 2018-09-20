@@ -168,25 +168,25 @@
               <div id="partners-slider" class="partners swiper-container">
                   <div class="swiper-wrapper">
                       <div class="swiper-slide">
-                          <img src="img/partners/brain.jpg" alt="">
+                          <img src="@asset('images/partners/brain.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/experis.jpg" alt="">
+                          <img src="@asset('images/partners/experis.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/clearsource.jpg" alt="">
+                          <img src="@asset('images/partners/clearsource.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/koda.jpg" alt="">
+                          <img src="@asset('images/partners/koda.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/brain.jpg" alt="">
+                          <img src="@asset('images/partners/brain.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/experis.jpg" alt="">
+                          <img src="@asset('images/partners/experis.jpg')" alt="">
                       </div>
                       <div class="swiper-slide">
-                          <img src="img/partners/clearsource.jpg" alt="">
+                          <img src="@asset('images/partners/clearsource.jpg')" alt="">
                       </div>
                   </div>
                   <!-- Add Scrollbar -->
