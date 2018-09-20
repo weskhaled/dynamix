@@ -1,81 +1,40 @@
 @extends('layouts.landing')
 @section('content')
 <!-- BEGIN FullScreen SLIDER -->
-<section id="fullscreen-slider" class="swiper-container">
-				<nav class="nav-slit">
-					<a class="prev" href="javascript:void(0)">
-						<span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
-						<div>
-							<h3 id="title-prev">Title prev</h3>
-							<img id="thumb-prev" src="http://placehold.it/200x140" alt="Previous thumb">
-						</div>
-					</a>
-					<a class="next" href="javascript:void(0)">
-						<span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
-						<div>
-							<h3 id="title-next">Title next</h3>
-							<img id="thumb-next" src="http://placehold.it/200x140" alt="Next thumb">
-						</div>
-					</a>
-				</nav>
-				<div class="swiper-pagination"></div>
-              <div class="swiper-wrapper no-space">
-				<?php 
-						
-						$slides_args = array(
-							'post_type' => 'slider',
-							'tax_query' => array(
-								array(
-									'taxonomy' => 'slide_location',
-									'field' => 'slug',
-									'terms' => 'home'
-								)
-							)
-						);
-						
-            $wp_query = new WP_Query($slides_args); 
-						$slidercounter=0;
-						if(have_posts()) : while(have_posts()) : the_post(); 
-						 if ( has_post_thumbnail()) {
-						  	$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large');
-						  	$thumb_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb');
-						 } else {
-		                    $large_image_url = ['http://placehold.it/960x640'];
-						  	$thumb_image_url = ['http://placehold.it/200x140'];
-						 }
-				?>
-				<article class="swiper-slide" data-title="<?php the_title(); ?>" data-thumb-url="<?php echo $thumb_image_url[0] ; ?>"> 				
-				 <header>
-				  <div class="pattern pattern-1"></div>
-				  <div class="pattern overlay-35-g"></div>
-				  <div class="header-image" style="background-image: url(<?php echo $large_image_url[0] ; ?>);"></div>	
-				  
-				  <div class="container container-inner">
-				   <?php  the_content(); ?>
-				  </div>
-				 </header>	
-				</article>
-				<?php endwhile; endif;
-                      // wp_reset_postdata();
-		               // Reset Query
-		                wp_reset_query();
-				 ?>
-				
-	 </div> 
-  </section>
-  <div class="aaaa">
-  @if($get_people)
-                <section class="people">
-                    @foreach($get_people->posts as $post)  
+  @if($get_sliders)
+          <div class="home-slider">
+            <!-- Strat Slider -->
+            <div id="home-slider" class="swiper-container">
+                <nav class="nav-slit">
+                    <a class="prev" href="javascript:void(0)">
+                        <span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
+                        <div>
+                            <h3 id="title-prev">Title prev</h3>
+                            <img id="thumb-prev" src="http://placehold.it/960x640" alt="Previous thumb">
+                        </div>
+                    </a>
+                    <a class="next" href="javascript:void(0)">
+                        <span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
+                        <div>
+                            <h3 id="title-next">Title next</h3>
+                            <img id="thumb-next" src="http://placehold.it/960x640" alt="Next thumb">
+                        </div>
+                    </a>
+                </nav>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-wrapper">
+                    @foreach($get_sliders->posts as $post)  
                         @php(setup_postdata($GLOBALS['post'] = $post)) 
                       
-                        @include('partials.list-item-'.get_post_type(), $post)
+                        @include('partials.list-item-'.get_post_type())
                         
                         @php(wp_reset_postdata())
                     @endforeach
-              </section>
-            @endif 
-  </div>
+                </div>
+            </div>
+            <!-- End Slider -->
+        </div>
+        @endif 
 <section class="about-us bg-light">
   <div class="container container-inner">
     <div class="row">

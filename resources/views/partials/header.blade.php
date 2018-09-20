@@ -30,6 +30,17 @@
                     wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'navbar-nav ml-auto nav'])
                 !!}
                 @endif
+                <ul class="navbar-nav mr-0 nav">
+                    <li class="nav-item">
+                        <button class="btn btn-fill black btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg">Submit
+                            CV
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg">Recommend
+                            a friend</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
