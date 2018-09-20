@@ -1,5 +1,81 @@
 @extends('layouts.landing')
 @section('content')
+<!-- BEGIN FullScreen SLIDER -->
+<section id="fullscreen-slider" class="swiper-container">
+				<nav class="nav-slit">
+					<a class="prev" href="javascript:void(0)">
+						<span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
+						<div>
+							<h3 id="title-prev">Title prev</h3>
+							<img id="thumb-prev" src="http://placehold.it/200x140" alt="Previous thumb">
+						</div>
+					</a>
+					<a class="next" href="javascript:void(0)">
+						<span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
+						<div>
+							<h3 id="title-next">Title next</h3>
+							<img id="thumb-next" src="http://placehold.it/200x140" alt="Next thumb">
+						</div>
+					</a>
+				</nav>
+				<div class="swiper-pagination"></div>
+              <div class="swiper-wrapper no-space">
+				<?php 
+						
+						$slides_args = array(
+							'post_type' => 'slider',
+							'tax_query' => array(
+								array(
+									'taxonomy' => 'slide_location',
+									'field' => 'slug',
+									'terms' => 'home'
+								)
+							)
+						);
+						
+            $wp_query = new WP_Query($slides_args); 
+						$slidercounter=0;
+						if(have_posts()) : while(have_posts()) : the_post(); 
+						 if ( has_post_thumbnail()) {
+						  	$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large');
+						  	$thumb_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'thumb');
+						 } else {
+		                    $large_image_url = ['http://placehold.it/960x640'];
+						  	$thumb_image_url = ['http://placehold.it/200x140'];
+						 }
+				?>
+				<article class="swiper-slide" data-title="<?php the_title(); ?>" data-thumb-url="<?php echo $thumb_image_url[0] ; ?>"> 				
+				 <header>
+				  <div class="pattern pattern-1"></div>
+				  <div class="pattern overlay-35-g"></div>
+				  <div class="header-image" style="background-image: url(<?php echo $large_image_url[0] ; ?>);"></div>	
+				  
+				  <div class="container container-inner">
+				   <?php  the_content(); ?>
+				  </div>
+				 </header>	
+				</article>
+				<?php endwhile; endif;
+                      // wp_reset_postdata();
+		               // Reset Query
+		                wp_reset_query();
+				 ?>
+				
+	 </div> 
+  </section>
+  <div class="aaaa">
+  @if($get_people)
+                <section class="people">
+                    @foreach($get_people->posts as $post)  
+                        @php(setup_postdata($GLOBALS['post'] = $post)) 
+                      
+                        @include('partials.list-item-'.get_post_type(), $post)
+                        
+                        @php(wp_reset_postdata())
+                    @endforeach
+              </section>
+            @endif 
+  </div>
 <section class="about-us bg-light">
   <div class="container container-inner">
     <div class="row">
@@ -85,115 +161,115 @@
   <!-- <div class="pattern pattern-1"></div> -->
   <div class="pattern back-35-g"></div>
   <div class="container container-inner text-center">
-      <div class="space30px"></div>
-      <div class="space30px"></div>
-      <div class="row">
-          <div id="quote-clients" class="swiper-container">
-              <div class="swiper-wrapper text-center color-white">
-                  <div class="swiper-slide quote">
-                      <div class="client-image">
-                          <img src="@asset('images/people/e-bout.jpg')" alt="">
-                      </div>
-                      <h4 class="live-font text-capitalize">Ekaterina Bout</h4>
-                      <blockquote>It is a very pleasant environment to work in. People at Dynamix are more
-                          friends
-                          than colleagues. The manager is easily approachable and is supportive.</blockquote>
-                      <div class="client-info">
-                          <span class="badge badge-dark">Admin, Accounting and logistics</span>
-                      </div>
-                  </div>
-                  <!--item-quote-->
-                  <div class="swiper-slide quote">
-                      <div class="client-image">
-                          <img src="@asset('images/people/e-bout.jpg')" alt="">
-                      </div>
-                      <h4 class="live-font text-capitalize">marwen lamti</h4>
-                      <blockquote>
-                          It's an incredible feeling to be able to put someone in a job. I get to spend my
-                          days talking to all different people across the country and from different walks of
-                          life. It's fulfilling to be able to help people get the job they love!"“It’s a
-                          pleasure working with Dynamix, They have a global and great understanding of
-                          consultants and clients requirements
-                      </blockquote>
-                      <div class="client-info">
-                          <span class="badge badge-dark">Admin, Accounting and logistics</span>
-                      </div>
-                  </div>
-                  <!--item-quote-->
-                  <div class="swiper-slide quote">
-                      <div class="client-image">
-                          <img src="@asset('images/people/e-bout.jpg')" alt="">
-                      </div>
-                      <h4 class="live-font text-capitalize">chaitali khodwe</h4>
-                      <blockquote>
-                          With help of Dynamix I can now deep dive into emerging technological advancements
-                          by getting placed as desires clients and roles. People in Dynamix are jovial and
-                          approachable and helped me to collaborate and adjust with multicultural teams.
-                      </blockquote>
-                      <div class="client-info">
-                          <span class="badge badge-dark">Admin, Accounting and logistics</span>
-                      </div>
-                  </div>
-                  <!--item-quote-->
-                  <div class="swiper-slide quote">
-                      <div class="client-image">
-                          <img src="@asset('images/people/s-jobs.jpg')" alt="">
-                      </div>
-                      <h4 class="live-font text-capitalize">saidani sami</h4>
-                      <blockquote>
-                          The recruiters’ team of Dynamix are approachable and knowledgeable with queries and
-                          concerns of their employees and consultants
-                      </blockquote>
-                      <div class="client-info">
-                          <span class="badge badge-dark">Admin, Accounting and logistics</span>
-                      </div>
-                  </div>
-                  <!--item-quote-->
-              </div>
-              <div class="space30px"></div>
-              <div class="space30px"></div>
-              <div class="swiper-pagination"></div>
+    <div class="space30px"></div>
+    <div class="space30px"></div>
+    <div class="row">
+      <div id="quote-clients" class="swiper-container">
+        <div class="swiper-wrapper text-center color-white">
+          <div class="swiper-slide quote">
+            <div class="client-image">
+              <img src="@asset('images/people/e-bout.jpg')" alt="">
+            </div>
+            <h4 class="live-font text-capitalize">Ekaterina Bout</h4>
+            <blockquote>It is a very pleasant environment to work in. People at Dynamix are more
+              friends
+              than colleagues. The manager is easily approachable and is supportive.</blockquote>
+            <div class="client-info">
+              <span class="badge badge-dark">Admin, Accounting and logistics</span>
+            </div>
           </div>
+          <!--item-quote-->
+          <div class="swiper-slide quote">
+            <div class="client-image">
+              <img src="@asset('images/people/e-bout.jpg')" alt="">
+            </div>
+            <h4 class="live-font text-capitalize">marwen lamti</h4>
+            <blockquote>
+              It's an incredible feeling to be able to put someone in a job. I get to spend my
+              days talking to all different people across the country and from different walks of
+              life. It's fulfilling to be able to help people get the job they love!"“It’s a
+              pleasure working with Dynamix, They have a global and great understanding of
+              consultants and clients requirements
+            </blockquote>
+            <div class="client-info">
+              <span class="badge badge-dark">Admin, Accounting and logistics</span>
+            </div>
+          </div>
+          <!--item-quote-->
+          <div class="swiper-slide quote">
+            <div class="client-image">
+              <img src="@asset('images/people/e-bout.jpg')" alt="">
+            </div>
+            <h4 class="live-font text-capitalize">chaitali khodwe</h4>
+            <blockquote>
+              With help of Dynamix I can now deep dive into emerging technological advancements
+              by getting placed as desires clients and roles. People in Dynamix are jovial and
+              approachable and helped me to collaborate and adjust with multicultural teams.
+            </blockquote>
+            <div class="client-info">
+              <span class="badge badge-dark">Admin, Accounting and logistics</span>
+            </div>
+          </div>
+          <!--item-quote-->
+          <div class="swiper-slide quote">
+            <div class="client-image">
+              <img src="@asset('images/people/s-jobs.jpg')" alt="">
+            </div>
+            <h4 class="live-font text-capitalize">saidani sami</h4>
+            <blockquote>
+              The recruiters’ team of Dynamix are approachable and knowledgeable with queries and
+              concerns of their employees and consultants
+            </blockquote>
+            <div class="client-info">
+              <span class="badge badge-dark">Admin, Accounting and logistics</span>
+            </div>
+          </div>
+          <!--item-quote-->
+        </div>
+        <div class="space30px"></div>
+        <div class="space30px"></div>
+        <div class="swiper-pagination"></div>
       </div>
+    </div>
   </div>
 </section>
 <section id="partners">
   <div class="container container-inner">
-      <div class="section-title text-center">
-          <h3 class="big w100 shadow-white text-uppercase">Our partners</h3>
-          <div class="seperator"></div>
-      </div>
-      <div class="row justify-content-center">
-          <div class="col-12">
-              <div id="partners-slider" class="partners swiper-container">
-                  <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/brain.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/experis.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/clearsource.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/koda.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/brain.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/experis.jpg')" alt="">
-                      </div>
-                      <div class="swiper-slide">
-                          <img src="@asset('images/partners/clearsource.jpg')" alt="">
-                      </div>
-                  </div>
-                  <!-- Add Scrollbar -->
-                  <!-- <div class="swiper-scrollbar"></div> -->
-              </div>
+    <div class="section-title text-center">
+      <h3 class="big w100 shadow-white text-uppercase">Our partners</h3>
+      <div class="seperator"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div id="partners-slider" class="partners swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/brain.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/experis.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/clearsource.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/koda.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/brain.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/experis.jpg')" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="@asset('images/partners/clearsource.jpg')" alt="">
+            </div>
           </div>
+          <!-- Add Scrollbar -->
+          <!-- <div class="swiper-scrollbar"></div> -->
+        </div>
       </div>
+    </div>
   </div>
 </section>
 <div class="pre-section text-center">

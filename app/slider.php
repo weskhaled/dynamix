@@ -59,7 +59,7 @@ function Slider() {
 	);
 	$args = array(
 		'label'               => __( 'slider', 'weskhaled' ),
-		'description'         => __( 'First Design Slider', 'weskhaled' ),
+		'description'         => __( 'Dynamix Slider', 'weskhaled' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
 		'taxonomies'          => array( 'slide_location' ),
@@ -121,55 +121,3 @@ function columns_image($column_name, $post_ID) {
 }
 
 add_action('manage_posts_custom_column', 'columns_image', 10, 2);
-
-/*	
-	add_filter("manage_edit-slider_columns", "slider_edit_columns");   
-	  
-	function slider_edit_columns($columns){  
-	        $columns = array(  
-	            "cb" => "<input type=\"checkbox\" />",  
-	            "thumbnail" => "",
-	            "title" => __("Title", "weskhaled-framework"),
-	            "slide_location" => __("Location", "weskhaled-framework")  
-	        );  
-	  
-	        return $columns;  
-	} 
-
-// GET FEATURED IMAGE
-function get_featured_image($post_ID) {
-    $post_thumbnail_id = get_post_thumbnail_id($post_ID);
-    if ($post_thumbnail_id) {
-        $post_thumbnail_img = wp_get_attachment_image_src($post_thumbnail_id, 'featured_preview');
-        return $post_thumbnail_img[0];
-    }
-}
-
-// SHOW THE FEATURED IMAGE
-function columns_image($column_name, $post_ID) {
-    if ($column_name == 'thumbnail') {
-        $post_featured_image = get_featured_image($post_ID);
-        if ($post_featured_image) {
-            echo '<img src="' . $post_featured_image . '" />';
-        }
-    }
-}
-
-add_action('manage_posts_custom_column', 'columns_image', 10, 2);
-
-*/
-/*
-add_filter('manage_posts_columns', 'posts_columns', 5);
-add_action('manage_posts_custom_column', 'posts_custom_columns', 5, 2);
-
-function posts_columns($defaults){
-    $defaults['riv_post_thumbs'] = __('Thumbs');
-    return $defaults;
-}
-
-function posts_custom_columns($column_name, $id){
-        if($column_name === 'riv_post_thumbs'){
-        echo the_post_thumbnail( 'featured-thumbnail' );
-    }
-}
-*/
