@@ -17,7 +17,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/">
                 <img src="@asset('images/logo.png')" width="150" height="35" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
