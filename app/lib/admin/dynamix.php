@@ -19,5 +19,6 @@ add_action('wp_before_admin_bar_render', function () {
 add_action('admin_menu', function () {
     add_menu_page( __( 'Dynamix' .' Theme Panel' ), __( 'Dynamix Panel' ), 'manage_options', 'settings', function(){
         require_once 'pages/index.php';
+        // @include('pages.index');
     });
 });

@@ -4,26 +4,26 @@
 #-----------------------------------------------------------------# 
 
 // Register Custom Post Type
-function Quote() {
+function Partner() {
 
 	$labels = array(
-		'name'                => _x( 'Quote', 'Post Type General Name', 'weskhaled' ),
-		'singular_name'       => _x( 'Quote', 'Post Type Singular Name', 'weskhaled' ),
-		'menu_name'           => __( 'Quote', 'weskhaled' ),
+		'name'                => _x( 'Partner', 'Post Type General Name', 'weskhaled' ),
+		'singular_name'       => _x( 'Partner', 'Post Type Singular Name', 'weskhaled' ),
+		'menu_name'           => __( 'Partner', 'weskhaled' ),
 		'parent_item_colon'   => __( 'Post:', 'weskhaled' ),
-		'all_items'           => __( 'Quotes', 'weskhaled' ),
-		'view_item'           => __( 'View Quote', 'weskhaled' ),
-		'add_new_item'        => __( 'Add New Quote', 'weskhaled' ),
-		'add_new'             => __( 'Add New Quote', 'weskhaled' ),
-		'edit_item'           => __( 'Edit Quote', 'weskhaled' ),
-		'update_item'         => __( 'Update Quote', 'weskhaled' ),
-		'search_items'        => __( 'Search Quote', 'weskhaled' ),
+		'all_items'           => __( 'Partners', 'weskhaled' ),
+		'view_item'           => __( 'View Partner', 'weskhaled' ),
+		'add_new_item'        => __( 'Add New Partner', 'weskhaled' ),
+		'add_new'             => __( 'Add New Partner', 'weskhaled' ),
+		'edit_item'           => __( 'Edit Partner', 'weskhaled' ),
+		'update_item'         => __( 'Update Partner', 'weskhaled' ),
+		'search_items'        => __( 'Search Partner', 'weskhaled' ),
 		'not_found'           => __( 'Not found', 'weskhaled' ),
 		'not_found_in_trash'  => __( 'Not found in Trash', 'weskhaled' ),
 	);
 	$args = array(
-		'label'               => __( 'quote', 'weskhaled' ),
-		'description'         => __( 'Dynamix quote', 'weskhaled' ),
+		'label'               => __( 'partner', 'weskhaled' ),
+		'description'         => __( 'Dynamix Partner', 'weskhaled' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
 		'taxonomies'          => array(),
@@ -41,15 +41,16 @@ function Quote() {
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
 	);
-	register_post_type( 'quote', $args );
+	register_post_type( 'partner', $args );
 
 }
 
 // Hook into the 'init' action
-add_action( 'init', 'Quote', 1 ); 
+add_action( 'init', 'Partner', 1 ); 
 
 
-function quote_columns($columns) {
+
+function partner_columns($columns) {
 
 	$new_columns = array(
 		"cb" => "<input type=\"checkbox\" />",  
@@ -57,6 +58,6 @@ function quote_columns($columns) {
 	);
     return array_merge( $new_columns,$columns);
 }
-add_filter('manage_quote_posts_columns' , 'quote_columns');
+add_filter('manage_partner_posts_columns' , 'partner_columns');
 
-// add_action('manage_posts_custom_column', 'columns_image', 11, 3);
+add_action('manage_posts_custom_column', 'columns_image', 11, 3);

@@ -8,19 +8,32 @@
 			color: white;
 			position: relative;
 			z-index: 1;
-			h5 {
+			h5,h3 {
+				color: #fff;
 				font-size: 14px;
 				font-weight: 600;
 				margin: 10px 0 25px 0;		
 			}
-			.recent-posts .media-heading {
+			.media-heading {
 					font-size: 15px;
 					color: white;
 				}
-    }
+			.date{
+				padding: 5px;
+				font-size: 12px;
+				font-weight: 700;
+				background-color: rgba(0, 0, 0, 0.3) !important;	
+			}
+			.post {
+				border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+				display: block;
+				padding: 0;
+				margin-bottom: 40px;
+			}
 	}
 	p {
 		color: #fff;
+	}
 	}
 	.copyrights {
 		background-color: #3c304c;

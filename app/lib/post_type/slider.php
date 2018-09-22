@@ -120,4 +120,4 @@ function columns_image($column_name, $post_ID) {
     }
 }
 
-add_action('manage_posts_custom_column', 'columns_image', 10, 2);
+// add_action('manage_posts_custom_column', 'columns_image', 10, 2);

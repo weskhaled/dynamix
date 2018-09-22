@@ -89,9 +89,27 @@ add_action('widgets_init', function () {
         'id'            => 'sidebar-primary'
     ] + $config);
     register_sidebar([
-        'name'          => __('Footer', 'sage'),
-        'id'            => 'sidebar-footer'
+        'name'          => __('Footer col 1', 'sage'),
+        'id'            => 'sidebar-footer-col-1'
     ] + $config);
+    register_sidebar([
+        'name'          => __('Footer col 2', 'sage'),
+        'id'            => 'sidebar-footer-col-2'
+    ] + $config);
+    register_sidebar([
+        'name'          => __('Footer col 3', 'sage'),
+        'id'            => 'sidebar-footer-col-3'
+    ] + $config);
+    register_sidebar([
+        'name'          => __('Footer col 4', 'sage'),
+        'id'            => 'sidebar-footer-col-4'
+    ] + $config);
+    register_sidebar(array(
+        'name'          => __('Sub Footer Text', 'sage'),
+        'id'            => 'sub-footer-text',
+        'before_widget' => '<div class="pull-left widget %1$s %2$s">',
+        'after_widget'  => '</div>',
+      ));
 });
 
 /**

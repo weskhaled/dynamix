@@ -103,7 +103,7 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #1c1c1c;
-    background-color: #7c7c7c;
+    background-color: #fff;
     overflow-x: hidden;
     position: relative;
     font-weight: 400;
@@ -1039,7 +1039,12 @@ body > .page-content > header {
   background-color: transparent!important;
 }
 .quote blockquote{
-  font-style: italic;
+  p {
+    color: white;
+    font-size: 18px;
+    line-height: 31px;
+    font-style: italic;
+  }
 }
 .quote .client-image{
   width: 75px !important;
@@ -1069,6 +1074,7 @@ body > .page-content > header {
   padding: 20px 0;
 }
 .partners .swiper-slide {
+  overflow: hidden;
   text-align: center;
   font-size: 18px;
   background: rgba(25, 27, 31, 0.75);

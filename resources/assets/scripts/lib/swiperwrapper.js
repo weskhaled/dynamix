@@ -231,7 +231,7 @@ export function swapper(options) {
         // console.log('scrollpercent: '+ scrollPercent);
         if ((scrollPercent >= 0) && (window.scrollY > (position.top - (targetHeight * 2)))) {
           $('.swiper-slide header .container', options.container).css({
-            'top': 1 - (((scrollPercent - targetHeight) / 2) - 35) + "px",
+            'top': 1 - (((scrollPercent - targetHeight) / 2) - 115) + "px",
             'opacity': (scrollPercent) / targetHeight,
           });
           $('.swiper-slide header .header-image').css({

@@ -15,12 +15,30 @@ class FrontPage extends Controller
         'tax_query' => array(
             array(
                 'taxonomy' => 'slide_location',
-                'field' => 'slug',
+                'field' => 'name',
                 'terms' => 'home'
             )
         )
         );
-        $people_query = new WP_Query($args);
-        return $people_query;
+        $query = new WP_Query($args);
+        return $query;
+    }
+    public function getQuotes()
+    {
+        $args = array(
+        'post_type'              => 'quote',
+        'posts_per_page'         => -1
+        );
+        $query = new WP_Query($args);
+        return $query;
+    }
+    public function getPartners()
+    {
+        $args = array(
+        'post_type'              => 'partner',
+        'posts_per_page'         => -1
+        );
+        $query = new WP_Query($args);
+        return $query;
     }
 }
