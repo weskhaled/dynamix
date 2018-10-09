@@ -401,58 +401,71 @@ body > .page-content > header {
   text-align: center;
   display: block;
   margin-bottom: 10px;
+  &:after{
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 50%;
+    width: 25%;
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+   }
  }
- .seperator:after{
-  position: absolute;
-  content: '';
-  top: 50%;
-  left: 50%;
-  width: 25%;
-  height: 2px;
-  background-color: rgba(0, 0, 0, 0.1);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -o-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
- }
- .page-content .pre-section{
-  position: relative;
-  z-index: 2;
-  background-color: #6b5488;
-  -webkit-transition: all 500ms ease-in-out;
-  -o-transition: all 500ms ease-in-out;
-  transition: all 500ms ease-in-out;
- }
- .page-content .pre-section:after{
-  content: '';
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 100%;
-  z-index: 4;
-  background-color: #6b5488;
-  -o-transform: translate(-50%, -50%) rotate(-45deg);
-  -ms-transform: translate(-50%, -50%) rotate(-45deg);
-  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
-  transform: translate(-50%, -50%) rotate(-45deg);
-  -webkit-transition: all 500ms ease-in-out;
-  -o-transition: all 500ms ease-in-out;
-  transition: all 500ms ease-in-out;
- }
- .page-content .pre-section:hover:after {
-  background-color: #191B1F;
- }
- .page-content .pre-section:hover{
-  background-color: #191B1F;
-  cursor: default;
- }
- .page-content .pre-section p{
-  position: relative;
-  z-index: 5;
-  font-size: 25px;
-  line-height: 30px;
-  margin: 0;
-  padding: 10px 0;
+
+ .page-content{
+  .pre-section{
+    position: relative;
+    z-index: 2;
+    background-color: #6b5488;
+    -webkit-transition: all 500ms ease-in-out;
+    -o-transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+    &:after{
+      content: '';
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      top: 100%;
+      z-index: 4;
+      background-color: #6b5488;
+      -o-transform: translate(-50%, -50%) rotate(-45deg);
+      -ms-transform: translate(-50%, -50%) rotate(-45deg);
+      -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+      transform: translate(-50%, -50%) rotate(-45deg);
+      -webkit-transition: all 500ms ease-in-out;
+      -o-transition: all 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
+     }
+     &:hover{
+      background-color: #191B1F;
+      cursor: default;
+     }
+     &:hover:after {
+      background-color: #191B1F;
+     }
+     p{
+      position: relative;
+      z-index: 5;
+      font-size: 25px;
+      line-height: 30px;
+      margin: 0;
+      padding: 10px 0;
+     }
+     h1 {
+      line-height: 30px;
+      font-size: 1.3em;
+      font-weight: 500;
+      small {
+        line-height: 35px;
+        font-size: 25px;
+        font-weight: 500;
+      }
+    }
+   }
  }
  .page-content > section.inner-shadow{
   position: relative;

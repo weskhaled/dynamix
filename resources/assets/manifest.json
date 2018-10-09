@@ -1,0 +1,13 @@
+{ 
+    "dependencies": {
+      "main.js": {
+        "vendor": [
+        ],
+        "files": [
+          "scripts/**/*",
+          "scripts/main.js"
+        ],
+        "main": true
+      }
+    }
+}
