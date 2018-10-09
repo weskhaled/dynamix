@@ -9,6 +9,10 @@
     ],
     "customizer": [
       "./scripts/customizer.js"
+    ],
+    "admin": [
+      "./scripts/admin/main.js",
+      "./styles/admin/main.scss"
     ]
   },
   "publicPath": "/wp-content/themes/dynamix-wp",
