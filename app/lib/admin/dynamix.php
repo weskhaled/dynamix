@@ -38,6 +38,6 @@ add_action('admin_menu', function () {
  * Customizer JS
  */
 add_action('admin_enqueue_scripts', function () {
-	wp_enqueue_style('sage/admin/main.css', asset_path('styles/admin.css'), false, null);
+	wp_enqueue_style('sage/admin/main.scss', asset_path('styles/admin.css'), false, null);
     wp_enqueue_script('sage/admin/main.js', asset_path('scripts/admin.js'), [], null, true);
 });
