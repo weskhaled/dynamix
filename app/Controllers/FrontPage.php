@@ -12,6 +12,7 @@ class FrontPage extends Controller
         $args = array(
         'post_type'              => 'slider',
         'posts_per_page'         => -1,
+        'orderby' => array( 'post_date' => 'ASC' ),
         'tax_query' => array(
             array(
                 'taxonomy' => 'slide_location',
