@@ -19,25 +19,19 @@ add_action('wp_before_admin_bar_render', function () {
     });
 add_action('admin_menu', function () {
     add_menu_page( __( 'Dynamix' .' Theme Panel' ), __( 'Dynamix Panel' ), 'manage_options', 'settings', function(){
+        require_once 'Controllers/Ajax/index.php';
         require_once 'pages/index.php';
-        // @include('pages.index');
     });
 });
-// function my_enqueue($hook) {
-//     // Only add to the edit.php admin page.
-//     // See WP docs.
-//     if ('edit.php' !== $hook) {
-//         return;
-//     }
-//     wp_enqueue_script('my_custom_script', plugin_dir_url(__FILE__) . '/myscript.js');
-// }
-
-// add_action('admin_enqueue_scripts', 'my_enqueue');
-
 /**
- * Customizer JS
+ * Customize JS
  */
+
 add_action('admin_enqueue_scripts', function () {
-	wp_enqueue_style('sage/admin/main.scss', asset_path('styles/admin.css'), false, null);
-    wp_enqueue_script('sage/admin/main.js', asset_path('scripts/admin.js'), [], null, true);
+	//replace with your page "id"
+	if($_GET["page"] == "settings")
+	{
+		wp_enqueue_style('sage/admin/main.scss', asset_path('styles/admin.css'), false, null);
+		wp_enqueue_script('sage/admin/main.js', asset_path('scripts/admin.js'), [], null, true);
+	}
 });

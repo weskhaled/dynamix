@@ -1,3 +1,14 @@
+#wpcontent {
+    padding: 0;
+}
+
+.el-header {
+    background-color: #8b46ff;
+    color: #fff;
+    text-align: right;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+}
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
 }
@@ -13,5 +24,20 @@
     }
     .el-menu.el-menu--horizontal{
         background-color: transparent;
+    }
+}
+.el-main{
+    padding: 0;
+}
+.el-menu--collapse>.el-menu-item i,
+.el-menu--collapse>.el-submenu>.el-submenu__title i {
+    margin: 0;
+    vertical-align: middle;
+    width: 24px;
+    text-align: center;
+}
+.el-menu-item{
+    i{
+        font-size: 18px;
     }
 }

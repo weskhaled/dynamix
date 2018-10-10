@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container-fluid">
   <el-row>
       <el-col :span="24">
           <h1 class="test">Admin Pages</h1>
@@ -24,7 +24,7 @@
 </template>
 <script>
     export default {
-      name: "Hello",
+      name: "Index",
       data: () => ({
           visible:false,
           value7:'',
