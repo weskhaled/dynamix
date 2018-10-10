@@ -4,3 +4,14 @@
 .el-menu-vertical-demo {
     min-height: 400px;
 }
+.el-menu.el-menu--horizontal {
+    border-bottom: 0;
+}
+.el-header{
+    nav{
+        padding: 0;
+    }
+    .el-menu.el-menu--horizontal{
+        background-color: transparent;
+    }
+}

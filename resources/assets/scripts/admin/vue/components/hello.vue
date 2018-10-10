@@ -25,7 +25,7 @@
 <script>
     export default {
       name: "Hello",
-        data: () => ({
+      data: () => ({
           visible:false,
           value7:'',
           // reactive data property of the component.

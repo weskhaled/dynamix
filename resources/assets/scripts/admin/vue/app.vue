@@ -8,32 +8,22 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <router-link class="nav-link" :to="{ name: 'Hello', params: {}}">Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'About', params: {}}">About</router-link>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control-sm mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+              <div class="ml-auto">
+                <el-menu
+                        :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+                  <el-menu-item index="1">Processing Center</el-menu-item>
+                  <el-submenu index="2">
+                    <template slot="title">Workspace</template>
+                    <el-menu-item index="2-1">
+                      <router-link to="/About" tag="span">item one</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-2">
+                      <router-link to="/" tag="span">item two</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="2-3">item three</el-menu-item>
+                  </el-submenu>
+                </el-menu>
+              </div> 
             </div>
             </nav>
         </el-header>
@@ -46,5 +36,13 @@
 <script>
     export default {
       name: "app",
+      data: () => ({
+          activeIndex:'1',
+      }),
+      methods: {
+        handleSelect(key, keyPath) {
+          console.log(key, keyPath);
+        },
+      },
     }
 </script>
