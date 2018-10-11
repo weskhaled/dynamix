@@ -13,7 +13,7 @@
                               :default-time="['12:00:00', '08:00:00']">
               </el-date-picker>
           </div>
-          <el-button @click="visible = true" size="small">Button</el-button>
+          <el-button @click="visible = true" size="small">Open Dialog</el-button>
       </el-col>
   </el-row>
   <!-- dialog -->
