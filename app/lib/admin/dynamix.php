@@ -1,5 +1,7 @@
 <?php
 namespace App;
+
+use Roots\Sage\Assets\JsonManifest;
 /**
  * Add Menu Admin
  */
@@ -11,7 +13,7 @@ add_action('wp_before_admin_bar_render', function () {
 		'href'   => get_site_url().'/wp-admin/admin.php?page=settings',
 		'meta'   => array(
 //			'class'    => 'btn',
-			'onclick'  => 'dyna_admin_page()',
+			// 'onclick'  => 'dyna_admin_page()',
 			'title'    => 'admin link',
 		),
 	);
@@ -31,7 +33,7 @@ add_action('admin_enqueue_scripts', function () {
 	//replace with your page "id"
 	if($_GET["page"] == "settings")
 	{
-		wp_enqueue_style('sage/admin/main.scss', asset_path('styles/admin.css'), false, null);
-		wp_enqueue_script('sage/admin/main.js', asset_path('scripts/admin.js'), [], null, true);
+		wp_enqueue_style('sage/admin.css', asset_path('styles/admin.css'), false, null);
+		wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), [], null, true);
 	}
 });

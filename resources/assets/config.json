@@ -11,8 +11,8 @@
       "./scripts/customizer.js"
     ],
     "admin": [
-      "./scripts/admin/main.js",
-      "./styles/admin/main.scss"
+      "./scripts/admin/admin.js",
+      "./styles/admin/admin.scss"
     ]
   },
   "publicPath": "/wp-content/themes/dynamix-wp",

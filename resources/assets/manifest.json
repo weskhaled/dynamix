@@ -8,6 +8,11 @@
           "scripts/main.js"
         ],
         "main": true
+      },
+      "admin.css": {
+        "files": [
+          "styles/admin/admin.scss"
+        ]
       }
     }
 }
