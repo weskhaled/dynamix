@@ -11,10 +11,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <div class="ml-auto">
-                <el-menu :router="true" text-color="#fff" 
+                <el-menu :default-active="page" :router="true" text-color="#fff" 
                          background-color="#8b46ff" active-text-color="#eee"
                          class="el-menu-demo" mode="horizontal">
-                  <el-menu-item  index="/About">
+                  <el-menu-item  index="/about">
                     About
                   </el-menu-item>
                   <el-menu-item  index="/">
@@ -23,7 +23,7 @@
                   <el-submenu index="">
                     <template slot="title">Workspace</template>
                     <el-menu-item index="/">Hello</el-menu-item>
-                    <el-menu-item index="/About">About</el-menu-item>
+                    <el-menu-item index="/about">About</el-menu-item>
                   </el-submenu>
                 </el-menu>
               </div> 
@@ -36,11 +36,13 @@
               <el-radio-button :label="false">expand</el-radio-button>
               <el-radio-button :label="true">collapse</el-radio-button>
             </el-radio-group> -->
-            <el-menu size="small" default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+            <el-menu size="small" default-active="2" class="el-menu-vertical-demo menu-collapse" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
               <el-menu-item index="4" @click="isCollapse = !isCollapse">
                 <i :class="isCollapse ? 'pg-menu' : 'pg-close'"></i>
-                <span slot="title">Collapse Navigation</span>
+                <span slot="title">{{isCollapse ? 'Open Navigation' : 'Close Navigation' }}</span>
               </el-menu-item>
+            </el-menu>
+            <el-menu size="small" default-active="/" class="el-menu-vertical-demo scrolled" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
               <el-submenu size="small" index="1">
                 <template slot="title">
                   <i class="el-icon-location"></i>
@@ -83,6 +85,7 @@
       name: "app",
       data: () => ({
          isCollapse: true,
+         page: '',
       }),
       methods: {
         handleSelect(key, keyPath) {
@@ -94,6 +97,10 @@
         handleClose(key, keyPath) {
           console.log(key, keyPath);
         },
+      },
+      mounted(){
+        this.page = this.$route.path;
+        console.log(this.$route);
       },
     }
 </script>

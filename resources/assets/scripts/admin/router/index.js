@@ -8,12 +8,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
+      name: 'index',
       component: Index,
     },
     {
       path: '/about',
-      name: 'About',
+      name: 'ibout',
       component: About,
     },
   ],

@@ -68,10 +68,17 @@ body.folded{
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
 }
-.el-menu-vertical-demo {
-    height: calc(100vh - 92px);
+.el-menu-vertical-demo.scrolled {
+    height: calc(100vh - 148px);
     overflow: hidden;
     overflow-y: auto;
+}
+.el-menu-vertical-demo.menu-collapse{
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    >li{
+        margin-bottom: 0;
+    }
 }
 .el-menu.el-menu--horizontal {
     border-bottom: 0;
