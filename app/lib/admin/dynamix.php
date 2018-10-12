@@ -21,19 +21,33 @@ add_action('wp_before_admin_bar_render', function () {
     });
 add_action('admin_menu', function () {
     add_menu_page( __( 'Dynamix' .' Theme Panel' ), __( 'Dynamix Panel' ), 'manage_options', 'settings', function(){
-        require_once 'Controllers/Ajax/index.php';
-        require_once 'pages/index.php';
+		require_once 'Controllers/Ajax/index.php';
+		require_once 'pages/index.php';
     });
 });
 /**
  * Customize JS
  */
 
+// add_action('admin_enqueue_scripts', function () {
+// 	//replace with your page "id"
+// 	if($_GET["page"] == "settings")
+// 	{
+// 		// wp_enqueue_style('sage/admin.css', asset_path('styles/admin.css'), false, null);
+// 		// wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), [], null, true);
+
+// 	}
+// });
+
 add_action('admin_enqueue_scripts', function () {
-	//replace with your page "id"
 	if($_GET["page"] == "settings")
 	{
 		wp_enqueue_style('sage/admin.css', asset_path('styles/admin.css'), false, null);
-		wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), [], null, true);
+		wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), ['jquery'], null, true);
+		$ajax_params = array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'ajax_nonce' => wp_create_nonce('my_nonce'),
+		);
+		wp_localize_script('sage/admin.js', 'ajax_object', $ajax_params);
 	}
-});
+}, 100);
