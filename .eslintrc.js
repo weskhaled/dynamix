@@ -5,7 +5,8 @@ module.exports = {
     "plugin:vue/essential",
   ],
   "globals": {
-    "wp": true
+    "wp": true,
+    "ajax_object": true
   },
   "env": {
     "node": true,

@@ -150,8 +150,3 @@ add_action('after_setup_theme', function () {
         return "<?= " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
     });
 });
-\WP_Route::get('wp-admin/ajax/{flight}', 'App\singleFlight');
-
-function singleFlight($flight){
-    echo $flight; // 1
-}
