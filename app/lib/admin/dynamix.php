@@ -45,9 +45,15 @@ add_action('admin_enqueue_scripts', function () {
 		wp_enqueue_style('sage/admin.css', asset_path('styles/admin.css'), false, null);
 		wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), ['jquery'], null, true);
 		$ajax_params = array(
+			'templateUrl' => get_option('siteurl'),
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'ajax_nonce' => wp_create_nonce('my_nonce'),
 		);
+		$wpApiSettings = array(
+			'root' => esc_url_raw( rest_url() ),
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		);
 		wp_localize_script('sage/admin.js', 'ajax_object', $ajax_params);
+		wp_localize_script('sage/admin.js', 'wpApiSettings', $wpApiSettings);
 	}
 }, 100);

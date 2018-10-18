@@ -34,7 +34,7 @@
             </div>
             <!-- End Slider -->
         </div>
-        @endif 
+        @endif
 <section class="about-us bg-light">
   <div class="container container-inner">
     <div class="row">
@@ -47,6 +47,9 @@
       <div class="col-sm-8">
         <div class="space30px"></div>
         <p class="text-dark">
+        @if (get_theme_mod( 'index_about_section' ) && get_theme_mod( 'index_about_section' ) != '')
+          {{ (get_theme_mod( 'index_about_section' )) }}
+        @else
           Dynamix s.a is a management company of Java consultants. We are specialized in Java web
           development, the Java consulting
           team at Dynamix s.a is proficient and experienced to create and manage applications aptly
@@ -55,8 +58,11 @@
           work
           on existing applications and transform them to meet your future business objectives and
           expectations…
+        @endif  
         </p>
-        <button class="btn btn-primary black btn-sm float-sm-right">Read More <i class="feathericon feathericon-arrow-right right"></i></button>
+        @if (get_theme_mod( 'about_btn_link' ) && get_theme_mod( 'about_btn_link' ) != '')
+        <a href="{{ get_page_link(get_theme_mod( 'about_btn_link' )) }}" class="btn btn-primary black btn-sm float-sm-right">Read More <i class="feathericon feathericon-arrow-right right"></i></a>
+        @endif
       </div>
     </div>
   </div>

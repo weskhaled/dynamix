@@ -36,16 +36,13 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="social-icons text-right clearfix">
-                        <a href="#" class="social-icon si-small si-facebook">
+                        <a href="<?php echo get_theme_mod( 'facebook' ); ?>" target="_blank" class="social-icon si-small si-facebook">
                             <i class="fa fa-facebook"></i>
                         </a>
-                        <a href="#" class="social-icon si-small si-twitter">
+                        <a href="<?php echo get_theme_mod( 'twitter' ); ?>" target="_blank" class="social-icon si-small si-twitter">
                             <i class="fa fa-twitter"></i>
                         </a>
-                        <a href="#" class="social-icon si-small si-github">
-                            <i class="fa fa-github"></i>
-                        </a>
-                        <a href="#" class="social-icon si-small si-linkedin">
+                        <a href="<?php echo get_theme_mod( 'linkedin' ); ?>" target="_blank" class="social-icon si-small si-linkedin">
                             <i class="fa fa-linkedin"></i>
                         </a>
                     </div>

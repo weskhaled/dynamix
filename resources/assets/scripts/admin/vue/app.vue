@@ -17,6 +17,9 @@
                   <el-menu-item  index="/about">
                     About
                   </el-menu-item>
+                  <el-menu-item  index="/slider">
+                    Slider
+                  </el-menu-item>
                   <el-menu-item  index="/">
                     Hello
                   </el-menu-item>
@@ -31,7 +34,7 @@
             </nav>
         </el-header>
     <el-container>
-        <el-aside width="auto">
+    <el-aside width="auto">
             <!-- <el-radio-group size="small" v-model="isCollapse" style="margin-bottom: 20px;">
               <el-radio-button :label="false">expand</el-radio-button>
               <el-radio-button :label="true">collapse</el-radio-button>
@@ -70,12 +73,12 @@
                 <span slot="title">Navigator Three</span>
               </el-menu-item>
             </el-menu>
-      </el-aside>
-      <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
-        <div class="pl-0 pr-0 pt-2 pb-2">
-          <router-view></router-view>
-        </div>
-      </el-main>
+    </el-aside>
+    <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
+      <div class="pl-0 pr-0 pt-2 pb-2">
+        <router-view></router-view>
+      </div>
+    </el-main>
     </el-container>
   </el-container>
   </div>
@@ -100,7 +103,6 @@
       },
       mounted(){
         this.page = this.$route.path;
-        console.log(this.$route);
       },
     }
 </script>

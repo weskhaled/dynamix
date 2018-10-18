@@ -6,7 +6,8 @@ module.exports = {
   ],
   "globals": {
     "wp": true,
-    "ajax_object": true
+    "ajax_object": true,
+    "wpApiSettings": true,
   },
   "env": {
     "node": true,

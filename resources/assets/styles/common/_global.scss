@@ -302,9 +302,32 @@ a {
     z-index: 3;
 }
    /* header*/
+  body
+  {
+      >.page-content{
+          &.header-fixed{
+          >div:nth-child(2) {
+            margin-top: 81px;
+           }
+          }
+       }
+       &.logged-in{
+        header.fixed-top{
+          top:32px;
+        }
+       }
+  }
+  body{
+    &.compose-mode,
+    &.customize-partial-edit-shortcuts-shown,
+    &.customize-partial-edit-shortcuts-hidden{
+      header.fixed-top {
+        top: 0;
+      }
+    }
+  }   
 body > .page-content > header {
-  position: relative;
-  z-index: 99;
+    z-index: 99;
     width: 100%;
     padding: 0;
     font-size: 100%;
@@ -338,6 +361,7 @@ body > .page-content > header {
   }
   body > .page-content > header .navbar-brand {
     padding: 0;
+    line-height: 50px;
   }
   body > .page-content > header .navbar {
     color: #000;

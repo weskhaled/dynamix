@@ -51,6 +51,7 @@ function my_recent_widget_registration() {
 }
 add_action('widgets_init', __NAMESPACE__ . '\\my_recent_widget_registration');
 
+// require_once 'lib/customizer.php';
 require_once 'lib/post_type/slider.php';
 require_once 'lib/post_type/quote.php';
 require_once 'lib/post_type/partner.php';
