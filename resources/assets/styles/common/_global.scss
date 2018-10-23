@@ -105,7 +105,6 @@ html, body {
     color: #1c1c1c;
     background-color: #fff;
     overflow-x: hidden;
-    position: relative;
     font-weight: 400;
 }
 /* btn
@@ -310,9 +309,76 @@ a {
             margin-top: 81px;
            }
           }
+          > header {
+            z-index: 99;
+            width: 100%;
+            padding: 0;
+            font-size: 100%;
+            pointer-events: auto;
+            -webkit-transform: translateY(0%);
+            -moz-transform: translateY(0%);
+            transform: translateY(0%);
+            -webkit-transition: all 0s,-webkit-transform 0.5s,padding 0.5s,opacity 0.5s;
+            -moz-transition: all 0s,-moz-transform 0.5s,padding 0.5s,opacity 0.5s;
+            transition: all 0s,transform 0.5s,padding 0.5s,opacity 0.5s;
+            position: relative;
+            .subnav {
+              background-color: #6b5388;
+              color: white;
+              .subnavinfo {
+                font-size: 13px;
+                line-height: 30px;
+                font-weight: 600;
+                span {
+                  margin-right: 10px;
+                  padding-right: 10px;
+                  border-right: 1px solid #826e9e;
+                  display: inline-block;
+                  &:last-child {
+                    margin-right: 0;
+                    padding-right: 0;
+                    border-right: none;
+                  }
+                }
+              }
+            }
+            .navbar-brand {
+              padding: 0;
+              line-height: 50px;
+            }
+            .navbar {
+              color: #000;
+              text-transform: uppercase;
+              min-height: 40px;
+              padding: 0;
+              z-index: 2;
+              box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+              transition: all 0s,margin 0.5s;
+              position: relative;
+              ul.navbar-nav{
+                >li{
+                  > a {
+                    font-size: 14px;
+                    padding: 15px 10px;
+                    -webkit-transition: all 0s,padding 0.5s,text-transform 0.5s;
+                    -moz-transition: all 0s,padding 0.5s,text-transform 0.5s;
+                    transition: all 0s,padding 0.5s,text-transform 0.5s;
+                  }
+                  > button {
+                    margin: 10px 0;
+                    margin-right: 5px;
+                  }
+                  &:last-child > button {
+                    margin-right: 0;
+                  }
+                } 
+              }
+            }
+          }
        }
        &.logged-in{
         header.fixed-top{
+          position: fixed;
           top:32px;
         }
        }
@@ -322,70 +388,12 @@ a {
     &.customize-partial-edit-shortcuts-shown,
     &.customize-partial-edit-shortcuts-hidden{
       header.fixed-top {
+        position: fixed;
         top: 0;
       }
     }
-  }   
-body > .page-content > header {
-    z-index: 99;
-    width: 100%;
-    padding: 0;
-    font-size: 100%;
-    pointer-events: auto;
-    -webkit-transform: translateY(0%);
-    -moz-transform: translateY(0%);
-    transform: translateY(0%);
-    -webkit-transition: all 0s,-webkit-transform 0.5s,padding 0.5s,opacity 0.5s;
-    -moz-transition: all 0s,-moz-transform 0.5s,padding 0.5s,opacity 0.5s;
-    transition: all 0s,transform 0.5s,padding 0.5s,opacity 0.5s;
-  }
-  body > .page-content > header .subnav {
-    background-color: #6b5388;
-    color: white;
-  }
-  body > .page-content > header .subnav .subnavinfo {
-    font-size: 13px;
-    line-height: 30px;
-    font-weight: 600;
-  }
-  body > .page-content > header .subnav .subnavinfo span {
-    margin-right: 10px;
-    padding-right: 10px;
-    border-right: 1px solid #826e9e;
-    display: inline-block;
-  }
-  body > .page-content > header .subnav .subnavinfo span:last-child {
-    margin-right: 0;
-    padding-right: 0;
-    border-right: none;
-  }
-  body > .page-content > header .navbar-brand {
-    padding: 0;
-    line-height: 50px;
-  }
-  body > .page-content > header .navbar {
-    color: #000;
-    text-transform: uppercase;
-    min-height: 40px;
-    padding: 0;
-    z-index: 2;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-    transition: all 0s,margin 0.5s;
-  }
-  body > .page-content > header .navbar .navbar-nav > li > a {
-    font-size: 14px;
-    padding: 15px 10px;
-    -webkit-transition: all 0s,padding 0.5s,text-transform 0.5s;
-    -moz-transition: all 0s,padding 0.5s,text-transform 0.5s;
-    transition: all 0s,padding 0.5s,text-transform 0.5s;
-  }
-  body > .page-content > header .navbar .navbar-nav > li > button {
-    margin: 10px 0;
-    margin-right: 5px;
-  }
-  body > .page-content > header .navbar .navbar-nav > li:last-child > button {
-    margin-right: 0;
-  }
+  }  
+  body > .page-content > header .navbar .navbar-nav > li
   body > .page-content > header .navbar .navbar-nav > .open > a,
   body > .page-content > header .navbar .navbar-nav > li:hover > a,
   body > .page-content > header .navbar .navbar-nav > li.active > a {

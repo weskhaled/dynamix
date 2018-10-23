@@ -1,5 +1,5 @@
 <footer>
-    <div class="footer-container">
+    <div class="footer-container" style="{{  get_theme_mod( 'footer_bg_color' ) ? 'background-color: '.get_theme_mod( 'footer_bg_color' ).';' : '' }}{{ (get_theme_mod( 'subfooter_fixed' ) == true) ? 'margin-bottom: 60px;' : '' }}">
         <div class="container container-inner">
             <div class="row">
                 <div class="col-sm-3">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="copyrights">
+    <div class="copyrights {{ (get_theme_mod( 'subfooter_fixed' ) == true) ? ' fixed-bottom' : '' }}">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">

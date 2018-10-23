@@ -34,7 +34,7 @@
                 @if (get_theme_mod( 'submit_btn_link' ))  
                 <ul class="mr-0 nav">
                     <li class="nav-item">
-                        <a href="{{ get_page_link(get_theme_mod( 'submit_btn_link' )) }}" class="btn btn-fill black btn-sm">
+                        <a href="{{ get_page_link(get_theme_mod( 'submit_btn_link' )) }}" class="btn btn-fill black btn-sm p-1">
                             Submit CV
                         </a>
                     </li>

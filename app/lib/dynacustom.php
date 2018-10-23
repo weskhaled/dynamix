@@ -12,13 +12,34 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
             bloginfo('name');
         }
     ]);
+
+
+  $wp_customize->add_setting( 'custom_g_fonts',
+    array(
+     'default' => '{"font":"Open Sans","regularweight":"regular","italicweight":"italic","boldweight":"700","category":"sans-serif"}'
+    ),
+    array('sanitize_callback' => 'skyrocket_google_font_sanitization')
+  );
+  $wp_customize->add_control( new \Skyrocket_Google_Font_Select_Custom_Control( $wp_customize, 'custom_g_fonts',
+    array(
+      'label' => __( 'Google Font Control' ),
+      'description' => esc_html__( 'Sample custom control description' ),
+      'section' => 'title_tagline',
+      'input_attrs' => array(
+        'font_count' => 'all',
+        'orderby' => 'alpha',
+      ),
+    )
+  ) );
+
+
     // section Header
     $wp_customize->add_section(
       'header',
       array(
           'title' => 'Header',
           'description' => 'Change the header of the theme.',
-          'priority' => 5,
+          'priority' => 20,
       )
     );
     // logo
@@ -139,7 +160,7 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     array(
         'title' => 'Index Page',
         'description' => 'Change the Index Page.',
-        'priority' => 12,
+        'priority' => 21,
     )
   );
   // about text
@@ -162,7 +183,6 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     )
   ) );
   // about btn link
-  // Test of Dropdown Select2 Control (single select)
   $wp_customize->add_setting( 'about_btn_link',
 	array(
 		'default' => '',
@@ -181,6 +201,46 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
         'order' => 'ASC',
         'post_type' => 'page'
       ),
+    )
+  ) );
+
+  // section Footer
+  $wp_customize->add_section(
+    'footer',
+    array(
+        'title' => 'Footer',
+        'description' => 'Change the Index Page.',
+        'priority' => 22,
+    )
+  );
+  // about text
+  $wp_customize->add_setting( 'footer_bg_color',
+  array(
+    'default' => '#6b5388',
+    'transport' => 'postMessage'
+  )
+);
+$wp_customize->add_control( new \WP_Customize_Color_Control(
+  $wp_customize,
+  'footer_bg_color',
+  array(
+    'label' => 'Footer Background Colour',
+    'section' => 'footer',
+    'settings' => 'footer_bg_color'
+  )
+) );
+    // fixed subfooter
+    $wp_customize->add_setting( 'subfooter_fixed',
+    array(
+      'default' => 0,
+      'transport' => 'refresh',
+      'sanitize_callback' => 'skyrocket_switch_sanitization'
+    )
+  );
+  $wp_customize->add_control( new \Skyrocket_Toggle_Switch_Custom_control( $wp_customize, 'subfooter_fixed',
+    array(
+      'label' => esc_html__( 'Toggle Fixed SubFooter' ),
+      'section' => 'footer'
     )
   ) );
 

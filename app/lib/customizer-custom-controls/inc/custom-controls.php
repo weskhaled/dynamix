@@ -739,9 +739,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 */
 		public function skyrocket_getGoogleFonts( $count = 30 ) {
 			// Google Fonts json generated from https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=YOUR-API-KEY
-			$fontFile = trailingslashit( get_template_directory_uri() ) . 'inc/google-fonts-alphabetical.json';
+			$fontFile =  trailingslashit( get_template_directory_uri() ) . '../app/lib/customizer-custom-controls/inc/google-fonts-alphabetical.json';
 			if ( $this->fontOrderBy === 'popular' ) {
-				$fontFile = trailingslashit( get_template_directory_uri() ) . 'inc/google-fonts-popularity.json';
+				$fontFile =  trailingslashit( get_template_directory_uri() ) . '../app/lib/customizer-custom-controls/inc/google-fonts-popularity.json';
 			}
 
 			$request = wp_remote_get( $fontFile );
