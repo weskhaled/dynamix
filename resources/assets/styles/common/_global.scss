@@ -92,7 +92,7 @@ textarea {
     color: #000;
     padding: 0.2em 0;
 }
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,900');
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -452,7 +452,7 @@ a {
   .pre-section{
     position: relative;
     z-index: 2;
-    background-color: #6b5488;
+    background-color: #621FE5;
     -webkit-transition: all 500ms ease-in-out;
     -o-transition: all 500ms ease-in-out;
     transition: all 500ms ease-in-out;
@@ -463,7 +463,7 @@ a {
       position: absolute;
       top: 100%;
       z-index: 4;
-      background-color: #6b5488;
+      background-color: #621FE5;
       -o-transform: translate(-50%, -50%) rotate(-45deg);
       -ms-transform: translate(-50%, -50%) rotate(-45deg);
       -webkit-transform: translate(-50%, -50%) rotate(-45deg);
@@ -1181,13 +1181,14 @@ a {
 
 /*widget styling*/
 /*tagcloud styling */
-.tagcloud a{
+.tagcloud {
+  a{
     font-weight: 700;
     background-color: transparent;
     display: inline-block;
     border: 2px solid rgba(0, 0, 0, 0.2);
     color: #fff;
-    font-size: 11px;
+    font-size: 11px!important;
     line-height: 25px;
     letter-spacing: .75px;
     margin: 2px 1px;
@@ -1196,29 +1197,32 @@ a {
     -webkit-transition: all .3s;
     -o-transition: all .3s;
     transition: all .3s;
+    &:hover{
+      color: #fff;
+      background-color: #000;
+      border-color: #fff;
+    }
    }
-   .tagcloud a:hover{
-    color: #fff;
-    background-color: #000;
-    border-color: #fff;
-   }
+} 
    
    /*recent posts styling */
-   .recent-posts .post{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    display: block;
-    padding: 0;
-    margin-bottom: 40px;
-   }
-   .recent-posts .post .date{
-    padding: 5px;
-    font-size: 12px;
-    font-weight: 700;
-    background-color: rgba(0, 0, 0, 0.3) !important;
-   }
-   .recent-posts .post p{
-    margin-bottom: 5px;
-   }
+   .recent-posts {
+    .post{
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      display: block;
+      padding: 0;
+      margin-bottom: 40px;
+      .date{
+        padding: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+       }
+    }
+    p{
+      margin-bottom: 5px;
+    }
+   } 
    
    /*social icons*/
    
@@ -1888,4 +1892,10 @@ a {
     h3 {
         page-break-after: avoid;
     }
+}
+
+.section-bg-13 {
+  background-image: url(../images/bg_15.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
 }

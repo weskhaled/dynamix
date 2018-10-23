@@ -15,7 +15,7 @@
                          background-color="#8b46ff" active-text-color="#eee"
                          class="el-menu-demo" mode="horizontal">
                   <el-menu-item  index="/about">
-                    About
+                    General
                   </el-menu-item>
                   <el-menu-item  index="/slider">
                     Slider

@@ -3,7 +3,7 @@
     <el-row :gutter="5">
       <el-col :span="24">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="Logo" name="first">
+            <el-tab-pane label="Général" name="first">
                 <el-row :gutter="5">
                   <el-col :span="24">
                     <el-upload
@@ -21,9 +21,9 @@
                   </el-col>
                 </el-row>  
             </el-tab-pane>
-            <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-            <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-            <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
+            <el-tab-pane label="Configs" name="second">Configs</el-tab-pane>
+            <el-tab-pane label="Medias" name="third">Medias</el-tab-pane>
+            <el-tab-pane label="SEO" name="fourth">SEO</el-tab-pane>
           </el-tabs>
       </el-col>
     </el-row>

@@ -59,7 +59,7 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     // subnav bg color
     $wp_customize->add_setting( 'subnav_color',
       array(
-        'default' => '#6b5388',
+        'default' => '#621FE5',
         'transport' => 'postMessage'
       )
     );
@@ -77,7 +77,7 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
           '#eef000',
           '#7ed934',
           '#1571c1',
-          '#6b5388'
+          '#621FE5'
         )
       )
     ) );
@@ -213,22 +213,39 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
         'priority' => 22,
     )
   );
-  // about text
+  // footer bg color
   $wp_customize->add_setting( 'footer_bg_color',
+    array(
+      'default' => '#621FE5',
+      'transport' => 'postMessage'
+    )
+   );
+    $wp_customize->add_control( new \WP_Customize_Color_Control(
+      $wp_customize,
+      'footer_bg_color',
+      array(
+        'label' => 'Footer Background Color',
+        'section' => 'footer',
+        'settings' => 'footer_bg_color'
+      )
+    ));
+    
+  // sub footer bg color
+  $wp_customize->add_setting( 'sub_footer_bg_color',
   array(
-    'default' => '#6b5388',
+    'default' => '#621FFF',
     'transport' => 'postMessage'
   )
-);
-$wp_customize->add_control( new \WP_Customize_Color_Control(
-  $wp_customize,
-  'footer_bg_color',
-  array(
-    'label' => 'Footer Background Colour',
-    'section' => 'footer',
-    'settings' => 'footer_bg_color'
-  )
-) );
+ );
+  $wp_customize->add_control( new \WP_Customize_Color_Control(
+    $wp_customize,
+    'sub_footer_bg_color',
+    array(
+      'label' => 'SubFooter Background Color',
+      'section' => 'footer',
+      'settings' => 'sub_footer_bg_color'
+    )
+  ));
     // fixed subfooter
     $wp_customize->add_setting( 'subfooter_fixed',
     array(
@@ -237,6 +254,7 @@ $wp_customize->add_control( new \WP_Customize_Color_Control(
       'sanitize_callback' => 'skyrocket_switch_sanitization'
     )
   );
+
   $wp_customize->add_control( new \Skyrocket_Toggle_Switch_Custom_control( $wp_customize, 'subfooter_fixed',
     array(
       'label' => esc_html__( 'Toggle Fixed SubFooter' ),
@@ -247,6 +265,26 @@ $wp_customize->add_control( new \WP_Customize_Color_Control(
 
 
 });
+// Print styles
+function print_styles() {
+  // $primary_colour                                   = get_theme_mod('custom_g_fonts');
+  $body_g_fonts                                   = json_decode(get_theme_mod('custom_g_fonts'));
+?>
+  <?php if ($body_g_fonts) : ?>
+    <link href="https://fonts.googleapis.com/css?family=<?= $body_g_fonts->font ?>:100,200,200i,300,300i,500,500i" rel="stylesheet">
+  <?php endif; ?> 
+  <style type="text/css">
+  
+    <?php if ($body_g_fonts) : ?>
+      body{
+        font-family: "<?= $body_g_fonts->font ?>" !important;
+      }
+    <?php endif; ?>
+
+  </style>
+<?php
+}
+add_action('wp_head', __NAMESPACE__ . '\\print_styles');
 /**
  * Customizer JS
  */

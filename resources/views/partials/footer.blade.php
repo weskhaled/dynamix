@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="copyrights {{ (get_theme_mod( 'subfooter_fixed' ) == true) ? ' fixed-bottom' : '' }}">
+    <div class="copyrights {{ (get_theme_mod( 'subfooter_fixed' ) == true) ? ' fixed-bottom' : '' }}" style="{{  get_theme_mod( 'sub_footer_bg_color' ) ? 'background-color: '.get_theme_mod( 'sub_footer_bg_color' ).';' : '' }}">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
