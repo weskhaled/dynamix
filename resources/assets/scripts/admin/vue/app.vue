@@ -40,7 +40,7 @@
               <el-radio-button :label="true">collapse</el-radio-button>
             </el-radio-group> -->
             <el-menu size="small" default-active="2" class="el-menu-vertical-demo menu-collapse" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-              <el-menu-item index="4" @click="isCollapse = !isCollapse">
+              <el-menu-item index="4" @click="isCollapse = !isCollapse;handleClick">
                 <i :class="isCollapse ? 'pg-menu' : 'pg-close'"></i>
                 <span slot="title">{{isCollapse ? 'Open Navigation' : 'Close Navigation' }}</span>
               </el-menu-item>
@@ -76,7 +76,7 @@
     </el-aside>
     <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
       <div class="pl-0 pr-0 pt-2 pb-2">
-        <router-view></router-view>
+        <router-view @update-cart="handleClick"></router-view>
       </div>
     </el-main>
     </el-container>
@@ -91,6 +91,9 @@
          page: '',
       }),
       methods: {
+        handleClick(){
+          this.$emit('update-view')
+        },
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
         },

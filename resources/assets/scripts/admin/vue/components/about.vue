@@ -38,20 +38,26 @@
                   </el-pagination>
                 </el-col>
               </el-row>
-              <el-row :gutter="15" class="media-imgs grid" ref="grid" v-masonry transition-duration="0.3s" item-selector=".grid-item">
-                <el-col :span="6" v-masonry-tile class="mb-3 grid-item" v-for="(media, index) in allmedias" :key="index">
+              <el-row :gutter="5" class="media-imgs grid" ref="grid" v-masonry transition-duration="0.3s" item-selector=".grid-item">
+                <el-col :span="6" v-masonry-tile class="mb-1 grid-item" v-for="(media, index) in allmedias" :key="index">
                     <figure class="effect-zoe">
                       <img :src="media.url" class="img-fluid" :alt="media.name">
                       <figcaption>
-                        <div class="row">
-                          <div class="col-sm-8">
+                        <div class="row m-0">
+                          <div class="col-sm-7 p-0">
                             <h2>{{media.name}}</h2>
                           </div>
-                          <div class="col-sm-4">
-                            <div class="icon-links pull-right">
-                              <a href="#"><i class="icon-eye"></i></a>
-                              <a href="#"><i class="icon-pencil"></i></a>
-                              <a href="#"><i class="icon-trash"></i></a>
+                          <div class="col-sm-5 p-0">
+                            <div class="icon-links pull-right text-center">
+                              <el-button class="ml-1" size="mini" type="primary" circle>
+                                <i class="fa fa-eye"></i>
+                              </el-button>
+                              <el-button class="ml-1" size="mini" type="info" circle>
+                                <i class="fa fa-edit"></i>
+                              </el-button>
+                              <el-button class="ml-1" size="mini" type="danger" circle>
+                                <i class="pg-trash"></i>
+                              </el-button>
                             </div>
                           </div>
                         </div>
@@ -81,6 +87,10 @@ import axios from 'axios';
            msnry : {},
       }),
       methods: {
+        renderlayout(){
+          console.log('test');
+          this.$redrawVueMasonry();
+        },
         getslogo(){
           return axios.get(wpApiSettings.root+'dynamix/v1/mods',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
         },
@@ -88,7 +98,6 @@ import axios from 'axios';
           return axios.post(wpApiSettings.root+'dynamix/v1/allmedias',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
         },
         handleClick(tab) {
-          console.log(tab);
           if(tab.name == 'medias'){
             this.$nextTick(function () {
               this.$redrawVueMasonry();
@@ -124,6 +133,8 @@ import axios from 'axios';
       },
       mounted: function() {
         // let self = this;
+        console.log('root',this.$route);
+        // this.$parent.$on('isCollapse', this.renderlayout());
         this.getslogo().then((response) => {
             console.log(response.data);
             this.fileList.push({'name': 'logo','url':response.data.upload_logo});
