@@ -305,6 +305,9 @@ a {
   {
       >.page-content{
           &.header-fixed{
+          >header{
+            position: fixed;
+          }
           >div:nth-child(2) {
             margin-top: 81px;
            }
@@ -633,7 +636,6 @@ a {
         max-width: inherit;
         -webkit-transform: translate3d(0, 100%, 0);
         transform: translate3d(0, 100%, 0);
-        webkit-transition: -webkit-transform 0.3s;
         transition: transform 0.3s;
       }
       

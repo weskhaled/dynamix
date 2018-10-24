@@ -53,8 +53,19 @@ add_action( 'rest_api_init', function () {
 } );
 
 function post_logo( \WP_REST_Request $request ) {
-	// return $request;
-	// return $request->get_file_params();
+	$query_images_args = array(
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'image',
+		'post_status'    => 'inherit',
+		'posts_per_page' => - 1,
+	);
+	
+	$query_images = new \WP_Query( $query_images_args );
+	
+	$images = array();
+	foreach ( $query_images->posts as $image ) {
+		$images[] = wp_get_attachment_url( $image->ID );
+	}
 
       // Prepare array for output
       $output = array();
@@ -89,10 +100,51 @@ function post_logo( \WP_REST_Request $request ) {
             // Success
             $output['status'] = 'success';
             $output['message'] = 'File '.$attachment_id.' uploaded.';
-            $output['image'] = wp_get_attachment_url($attachment_id);
+            $output['image'] = $images;
         	}
         }
       }
       
       return $output;
+}
+
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'dynamix/v1', '/allmedias', array(
+		'methods' => 'POST',
+		'callback' => __NAMESPACE__ . '\\allmedias',
+		'args' => array(
+			'id' => array(
+				'validate_callback' => function($param, $request, $key) {
+					return is_numeric( $param );
+				}
+			),
+		),
+	) );
+} );
+
+function allmedias( \WP_REST_Request $request ) {
+	$query_images_args = array(
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'image',
+		'post_status'    => 'inherit',
+		'posts_per_page' => - 1,
+	);
+	
+	$query_images = new \WP_Query( $query_images_args );
+	
+	$images =  array();
+	foreach ( $query_images->posts as $image ) {
+		// array_push()
+		// $images[] = (
+		// 	'title' => get_the_title( $image->ID ),
+		// 	'link' => wp_get_attachment_url( $image->ID ),
+		// )
+		$img = new \stdClass();
+		$img->name = get_the_title( $image->ID );
+		$img->url = wp_get_attachment_url( $image->ID );
+		$images[] = $img;
+		// $images[] = wp_get_attachment_url( $image->ID );
+	}
+      
+    return $images;
 }

@@ -6,3 +6,29 @@
 @import '../fonts/feather-icons.css';
 @import '../fonts/pages-icons.css';
 @import '~swiper/dist/css/swiper.min.css';
+.media-imgs{
+    .el-card__body{
+        padding: 0;
+    }
+    .madia-thumb{
+        width: 100%;
+        height: 100%;
+        background: rgb(250, 250, 250);
+        min-height: 200px;
+        position: relative;
+        img{
+            max-height: 100%;
+            max-width: 100%;
+            height: auto;
+            width: auto;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-sizing: border-box;
+            margin: auto;
+        }
+    }
+}
