@@ -24,15 +24,39 @@
             </el-tab-pane>
             <el-tab-pane label="Configs" name="second">Configs</el-tab-pane>
             <el-tab-pane label="SEO" name="fourth">SEO</el-tab-pane>
-            <el-tab-pane label="Medias" name="5">
-
-              <el-row :gutter="15" class="media-imgs">
-                <el-col :span="6" class="mb-3" v-for="(media, index) in allmedias" :key="index">
-                    <el-card shadow="hover">
-                      <div class="madia-thumb">
-                            <img :src="media.url" class="img-fluid" :alt="media.name">                      
-                      </div>
-                    </el-card>
+            <el-tab-pane label="Medias" name="medias">
+              <el-row :gutter="15" class="mb-3">
+                <el-col :span="24">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPageMedias"
+                    :page-sizes="[100, 200, 300, 400]"
+                    :page-size="100"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="50000">
+                  </el-pagination>
+                </el-col>
+              </el-row>
+              <el-row :gutter="15" class="media-imgs grid" ref="grid" v-masonry transition-duration="0.3s" item-selector=".grid-item">
+                <el-col :span="6" v-masonry-tile class="mb-3 grid-item" v-for="(media, index) in allmedias" :key="index">
+                    <figure class="effect-zoe">
+                      <img :src="media.url" class="img-fluid" :alt="media.name">
+                      <figcaption>
+                        <div class="row">
+                          <div class="col-sm-8">
+                            <h2>{{media.name}}</h2>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="icon-links pull-right">
+                              <a href="#"><i class="icon-eye"></i></a>
+                              <a href="#"><i class="icon-pencil"></i></a>
+                              <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </figcaption>			
+                    </figure>
                 </el-col>
               </el-row>
 
@@ -44,6 +68,7 @@
 </template>
 <script>
 import axios from 'axios';
+// import $ from 'jquery';
     export default {
       name: "About",
         data: () => ({
@@ -52,6 +77,8 @@ import axios from 'axios';
            fileList: [],
            wpApiSettings: wpApiSettings,
            allmedias : [],
+           currentPageMedias : 1,
+           msnry : {},
       }),
       methods: {
         getslogo(){
@@ -62,6 +89,11 @@ import axios from 'axios';
         },
         handleClick(tab) {
           console.log(tab);
+          if(tab.name == 'medias'){
+            this.$nextTick(function () {
+              this.$redrawVueMasonry();
+            })
+          }
         },
         handleRemove(file, fileList) {
           console.log(file, fileList);
@@ -83,8 +115,15 @@ import axios from 'axios';
           // this.dialogImageUrl = file.url;
           // this.dialogVisible = true;
         },
+        handleSizeChange(val) {
+        console.log(`${val} items per page`);
+        },
+        handleCurrentChange(val) {
+          console.log(`current page: ${val}`);
+        },
       },
       mounted: function() {
+        // let self = this;
         this.getslogo().then((response) => {
             console.log(response.data);
             this.fileList.push({'name': 'logo','url':response.data.upload_logo});
@@ -92,7 +131,8 @@ import axios from 'axios';
         this.getallmedias().then((response) => {
             console.log(response.data);
             this.allmedias = response.data;
-        })  
+            this.$redrawVueMasonry();
+        })
       },
     }
 </script>

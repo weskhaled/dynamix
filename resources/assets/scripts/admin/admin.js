@@ -4,9 +4,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import 'bootstrap';
+import {VueMasonryPlugin} from 'vue-masonry';
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 Vue.use(ElementUI, { locale });
+Vue.use(VueMasonryPlugin);
 import App from './vue/app.vue';
 // const App = {name:'app', template: '<div id="app"><router-view></router-view></div>'};
 import router from './router';
