@@ -39,7 +39,7 @@
                 </el-col>
               </el-row>
               <el-row :gutter="5" class="media-imgs grid" ref="grid" v-masonry transition-duration="0.3s" item-selector=".grid-item">
-                <el-col :span="6" v-masonry-tile class="mb-1 grid-item" v-for="(media, index) in allmedias" :key="index">
+                <el-col :span="6" :sm="12" :md="8" :lg="6" v-masonry-tile class="mb-1 grid-item" v-for="(media, index) in allmedias" :key="index">
                     <figure class="effect-zoe">
                       <img :src="media.url" class="img-fluid" :alt="media.name">
                       <figcaption>
@@ -52,10 +52,10 @@
                               <el-button class="ml-1" size="mini" type="primary" circle>
                                 <i class="fa fa-eye"></i>
                               </el-button>
-                              <el-button class="ml-1" size="mini" type="info" circle>
+                              <el-button class="ml-1" @click="visible = true;viewimg = media" size="mini" type="info" circle>
                                 <i class="fa fa-edit"></i>
                               </el-button>
-                              <el-button class="ml-1" size="mini" type="danger" circle>
+                              <el-button class="ml-1" @click="ConfirmDelete(media)" size="mini" type="danger" circle>
                                 <i class="pg-trash"></i>
                               </el-button>
                             </div>
@@ -70,10 +70,19 @@
           </el-tabs>
       </el-col>
     </el-row>
+    <!-- dialog -->
+    <el-dialog :visible.sync="visible" :title="viewimg.name">
+        <el-row>
+          <div class="text-center">
+            <img :src="viewimg.url" class="img-fluid">
+          </div>
+        </el-row>
+    </el-dialog>
 </div>  
 </template>
 <script>
 import axios from 'axios';
+// import Masonry from 'masonry-layout';
 // import $ from 'jquery';
     export default {
       name: "About",
@@ -84,24 +93,23 @@ import axios from 'axios';
            wpApiSettings: wpApiSettings,
            allmedias : [],
            currentPageMedias : 1,
-           msnry : {},
+           visible : false,
+           viewimg: {},
+           confirmdelete :false,
       }),
       methods: {
-        renderlayout(){
-          console.log('test');
-          this.$redrawVueMasonry();
-        },
         getslogo(){
           return axios.get(wpApiSettings.root+'dynamix/v1/mods',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
+        },
+        deletepost(id){
+          return axios.delete(wpApiSettings.root+'wp/v2/media/'+id+'?force=true',{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
         },
         getallmedias(){
           return axios.post(wpApiSettings.root+'dynamix/v1/allmedias',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
         },
         handleClick(tab) {
           if(tab.name == 'medias'){
-            this.$nextTick(function () {
-              this.$redrawVueMasonry();
-            })
+            this.reDraw();
           }
         },
         handleRemove(file, fileList) {
@@ -121,28 +129,71 @@ import axios from 'axios';
         },
         handlePictureCardPreview(file) {
           console.log(file);
-          // this.dialogImageUrl = file.url;
-          // this.dialogVisible = true;
         },
         handleSizeChange(val) {
-        console.log(`${val} items per page`);
+          console.log(`${val} items per page`);
         },
         handleCurrentChange(val) {
           console.log(`current page: ${val}`);
         },
+        reDraw(){
+          this.$nextTick(function () {
+            this.$redrawVueMasonry();
+          })
+        },
+        ConfirmDelete(media) {
+          console.log(media);
+          this.$confirm('This will permanently delete the file. Continue?', 'Warning', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning',
+          }).then(() => {
+            this.deletepost(media.id).then((response) => {
+              console.log(response);
+              // this.allmedias = response.data;
+              this.getallmedias().then((response) => {
+                this.allmedias = response.data;
+                this.reDraw();
+              })
+              this.$message({
+              showClose: true,
+              type: 'success',
+              message: 'Delete completed',
+            });
+            })
+          }).catch(() => {
+            this.$message({
+              showClose: true,
+              type: 'info',
+              message: 'Delete canceled',
+            });          
+          });
+        },
+        renderlayout(){
+          console.log('test');
+          this.$redrawVueMasonry();
+        },
       },
       mounted: function() {
-        // let self = this;
-        console.log('root',this.$route);
+        this.$root.$on('message', () => {
+          // console.log('about event',data);
+          if( this.activeName == 'medias'){
+            this.reDraw();
+          }
+        })
         // this.$parent.$on('isCollapse', this.renderlayout());
         this.getslogo().then((response) => {
-            console.log(response.data);
             this.fileList.push({'name': 'logo','url':response.data.upload_logo});
         }),
         this.getallmedias().then((response) => {
-            console.log(response.data);
             this.allmedias = response.data;
-            this.$redrawVueMasonry();
+            this.reDraw();
+        })
+      },
+      updated: function () {
+        this.$nextTick(function () {
+          // Code that will run only after the
+          this.reDraw();
         })
       },
     }

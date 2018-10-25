@@ -123,16 +123,11 @@ function allmedias( \WP_REST_Request $request ) {
 	
 	$images =  array();
 	foreach ( $query_images->posts as $image ) {
-		// array_push()
-		// $images[] = (
-		// 	'title' => get_the_title( $image->ID ),
-		// 	'link' => wp_get_attachment_url( $image->ID ),
-		// )
 		$img = new \stdClass();
 		$img->name = get_the_title( $image->ID );
 		$img->url = wp_get_attachment_url( $image->ID );
+		$img->id = $image->ID ;
 		$images[] = $img;
-		// $images[] = wp_get_attachment_url( $image->ID );
 	}
       
     return $images;
