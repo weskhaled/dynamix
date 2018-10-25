@@ -23,6 +23,9 @@
                   <el-menu-item  index="/">
                     Hello
                   </el-menu-item>
+                  <el-menu-item  index="/condidate">
+                    Condidat
+                  </el-menu-item>
                   <el-submenu index="">
                     <template slot="title">Workspace</template>
                     <el-menu-item index="/">Hello</el-menu-item>

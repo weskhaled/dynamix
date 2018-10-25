@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '../vue/components/index.vue'
 import About from '../vue/components/about.vue'
 import Slider from '../vue/components/slider.vue'
+import Condidat from '../vue/components/candidat.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,11 @@ export default new Router({
       path: '/slider',
       name: 'slider',
       component: Slider,
+    },
+    {
+      path: '/condidate',
+      name: 'condidate',
+      component: Condidat,
     },
   ],
 })
