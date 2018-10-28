@@ -85,7 +85,7 @@ import axios from 'axios';
 // import Masonry from 'masonry-layout';
 // import $ from 'jquery';
     export default {
-      name: "About",
+      name: "Section",
         data: () => ({
           // reactive data property of the component.
            activeName: 'first',

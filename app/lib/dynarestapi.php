@@ -25,8 +25,8 @@ add_action( 'rest_api_init', function () {
 				}
 			),
 		),
-  ) );
-  register_rest_route( 'dynamix/v1', '/logo', array(
+	) );
+	register_rest_route( 'dynamix/v1', '/logo', array(
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\post_logo',
 		'args' => array(
@@ -36,8 +36,8 @@ add_action( 'rest_api_init', function () {
 				}
 			),
 		),
-  ) );
-  register_rest_route( 'dynamix/v1', '/allmedias', array(
+	) );
+	register_rest_route( 'dynamix/v1', '/allmedias', array(
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\allmedias',
 		'args' => array(
@@ -48,6 +48,21 @@ add_action( 'rest_api_init', function () {
 			),
 		),
 	) );
+	register_rest_route( 'dynamix/v1', '/condidates', array(
+		'methods' => 'POST',
+		'callback' => __NAMESPACE__ . '\\getcondidates',
+		'args' => array(
+			'id' => array(
+				'validate_callback' => function($param, $request, $key) {
+					return is_numeric( $param );
+				}
+			),
+		),
+	) );
+	register_rest_route( 'dynamix/v1', '/logout', array(
+		'methods'             => 'POST',
+		'callback'            => __NAMESPACE__ . '\\logout'
+   ) );
 } );
 
 function get_mods( $data ) {
@@ -131,4 +146,49 @@ function allmedias( \WP_REST_Request $request ) {
 	}
       
     return $images;
+}
+
+function getcondidates( \WP_REST_Request $request ) {
+	$offset = 0 ;
+	$per_page = 5 ;
+	if(isset($request['offset'])){
+		$offset = $request['offset'];
+	}
+	if(isset($request['per_page'])){
+		$per_page = $request['per_page'];
+	}
+	
+	$query_posts_args = array(
+		'post_type'      => 'condidate',
+		'post_status'    => 'all',
+		'posts_per_page' => $per_page,
+		'offset' => $offset,
+	);
+	
+	$query_posts = new \WP_Query( $query_posts_args );
+	
+	$datacndts = array();
+	foreach ( $query_posts->posts as $post ) {
+		$condidate = new \stdClass();
+		$condidate->name = get_the_title( $post->ID );
+		$condidate->status = get_post_status($post->ID);
+		$condidate->meta = get_post_meta($post->ID, 'condidate_info');
+		$condidate->id = $post->ID ;
+		$datacndts[] = $condidate;
+	}
+	$query_posts_count = new \WP_Query( array(
+		'post_type'      => 'condidate',
+		'post_status'    => 'all',
+		'posts_per_page' => -1
+	) ); 
+    return array(
+		'lenght' => count($query_posts_count->posts),
+		// 'lenght' => wp_count_posts('condidate')->pending,
+		'data' => $datacndts
+	);
+}
+
+function logout() {
+	wp_logout();
+	return true;
 }

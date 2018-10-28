@@ -44,28 +44,45 @@ class PageSubmitCv extends Controller
             //         return false;
             //     }
             // }
-            if(isset($mail)) {
-                $new_post = array(
-                    'post_title' => $firstname,
-                    'post_content' => $mail,
-                    'post_name' => $mail ,
-                    'post_status' => 'pending',
-                    'post_date' => date('Y-m-d H:i:s'),
-                    'post_type' => 'condidate'
-                );
-                $post_id = wp_insert_post($new_post); 
-                if ($post_id){ 
-                    add_post_meta($post_id, 'FIRSTNAME', $firstname, true);
-                    add_post_meta($post_id, 'LASTNAME', $lastname, true);
-                    add_post_meta($post_id, 'MAIL', $mail, true);
-                    add_post_meta($post_id, 'PHONE', $phone, true);
-                    add_post_meta($post_id, 'MESSGAE', $message, true);
-                    add_post_meta($post_id, 'RESUMEURL', $message, true);
-                    echo get_post_meta( $post_id, 'RESUMEURL' );
-                    return $post_id;
-                } else { 
-                    return false;
+            if(isset($_FILES['resumefile']) && isset($_POST['mail'])) { 
+                $upload_dir = wp_upload_dir();
+                
+                $folderPath = trailingslashit( $upload_dir['basedir'] )."condidates/files";
+                if (!is_dir($folderPath)) {
+                    mkdir($folderPath, 0755, true);
                 }
+
+                $filename = $mail . '_' . basename($_FILES['resumefile']['name']);
+                $filetype = $_FILES['resumefile']['type'];
+                $target_path = $folderPath . "/" . $filename;
+                    if(move_uploaded_file($_FILES['resumefile']['tmp_name'], $target_path)) {
+
+                        $new_post = array(
+                            'post_title' => $firstname,
+                            'post_content' => $mail,
+                            'post_name' => $mail ,
+                            'post_status' => 'pending',
+                            'post_date' => date('Y-m-d H:i:s'),
+                            'post_type' => 'condidate'
+                        );
+                        $post_id = wp_insert_post($new_post);
+                        if ($post_id){ 
+                            $condidateinfo = Array(
+                                'firstname' => $firstname,
+                                'lastname' => $lastname,
+                                'mail' => $mail,
+                                'phone' => $phone,
+                                'message' => $message,
+                                'resumeurl' => 'wp-content/uploads/condidates/files/'.$filename
+                            );
+                            update_post_meta($post_id, 'condidate_info', $condidateinfo, true);
+                            return $post_id;
+                        } else { 
+                            return false;
+                        }
+
+                    }
+                chmod("{$target_path}", 0755);
             } else {
                 return false;
             }

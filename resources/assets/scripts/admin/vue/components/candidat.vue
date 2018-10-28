@@ -1,9 +1,12 @@
 <template>
 <div class="container-fluid">
-  <el-row>
-      <el-col :span="24">
-          <h2 class="test">List Of Condidate</h2>
-      </el-col>
+  <el-row class="mt-3 mb-3">
+    <el-col :span="24">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>
+            <el-breadcrumb-item>Condidates</el-breadcrumb-item>
+        </el-breadcrumb>
+    </el-col>
   </el-row>
   <el-row>
     <el-col :span="24">
@@ -11,7 +14,7 @@
         <el-table
             :data="tableCondidate"
             style="width: 100%"
-            max-height="550">
+            max-height="450">
             <el-table-column
             fixed
             prop="id"
@@ -20,29 +23,29 @@
             </el-table-column>
             <el-table-column
             fixed
-            prop="firstname"
+            prop="meta[0].firstname"
             label="First Name"
             width="150">
             </el-table-column>
             <el-table-column
-            prop="lastname"
+            prop="meta[0].lastname"
             label="Last Name"
             width="250">
             </el-table-column>
             <el-table-column
-            prop="phone"
+            prop="meta[0].phone"
             label="Phone Number"
             width="250">
             </el-table-column>
             <el-table-column
-            prop="message"
+            prop="meta[0].message"
             label="Message"
             width="450">
             </el-table-column>
             <el-table-column
             fixed="right"
             label="Actions"
-            width="220">
+            width="280">
             <template slot-scope="scope">
                 <el-button
                 @click.native.prevent="deleteCondidate(scope.row)"
@@ -58,17 +61,27 @@
                 size="mini">
                 View
                 </el-button>
+                <el-button
+                @click.native.prevent="opencv(scope.row.meta[0].resumeurl)"
+                type="primary" 
+                round
+                size="mini">
+                Open Cv
+                </el-button>
             </template>
             </el-table-column>
         </el-table>
     </el-col>
-    <el-col>
+    <el-col :span="24" class="mt-2">
 
         <el-pagination
-            :current-page.sync="currentPage1"
-            :page-size="100"
-            layout="total, prev, pager, next"
-            :total="1000">
+            :current-page.sync="currentPage"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
+            :page-size="per_page"
+            :page-sizes="[5, 20, 50, 100]"
+            layout="total,sizes, prev, pager, next"
+            :total="totatcondidate">
         </el-pagination>
 
     </el-col>
@@ -87,39 +100,15 @@ import axios from 'axios';
       name: "Condidat",
       data: () => ({
           visible:false,
-          tableCondidate: [      
-            {
-            id: '1',
-            firstname: 'Tom',
-            lastname: 'Weskhaled',
-            phone: '58685536',
-            message: 'Los Angeles',
-            }, {
-            id: '2',
-            firstname: 'Tom 2',
-            lastname: 'Weskhaled 2',
-            phone: '58685536',
-            message: 'Los Angeles 2',
-            }, {
-            id: '2',
-            firstname: 'Tom 2',
-            lastname: 'Weskhaled 2',
-            phone: '58685536',
-            message: 'Los Angeles 2',
-            }, {
-            id: '2',
-            firstname: 'Tom 2',
-            lastname: 'Weskhaled 2',
-            phone: '58685536',
-            message: 'Los Angeles 2',
-            },
-        ],
-          currentPage1: 1,
+          tableCondidate: [],
+          currentPage: 1,
+          per_page : 5,
+          totatcondidate: 0,
 
       }),
       methods: {
-        getsliders(){
-            return axios.get(wpApiSettings.root+'wp/v2/media',{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
+        getcondidates(data={}){
+            return axios.post(wpApiSettings.root+'dynamix/v1/condidates',data,{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
         },
         deleteCondidate(datarow){
           this.$confirm('This will permanently delete the file. Continue?', 'Warning', {
@@ -145,11 +134,30 @@ import axios from 'axios';
             this.visible = true;
             console.log(datarow);
         },
+        opencv(url){
+            window.open('/'+url,'_blank');
+        },
+        handleCurrentChange(val) {
+            this.getcondidates({'offset': (val-1)*this.per_page}).then((response) => {
+                this.tableCondidate = response.data.data;
+                this.totatcondidate = response.data.lenght;
+                // console.log(response.data);
+            })
+        },
+        handleSizeChange(val) {
+            this.per_page = val;
+            this.getcondidates({'offset': 0,'per_page': this.per_page}).then((response) => {
+                this.tableCondidate = response.data.data;
+                this.totatcondidate = response.data.lenght;
+                // console.log(response.data);
+            })
+        },
       },
       mounted: function() {
         // let self = this;
-        this.getsliders().then((response) => {
-            // this.tableCondidate = response.data;
+        this.getcondidates().then((response) => {
+            this.tableCondidate = response.data.data;
+            this.totatcondidate = response.data.lenght;
             console.log(response.data);
         })
       },
