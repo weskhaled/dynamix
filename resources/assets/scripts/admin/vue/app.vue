@@ -9,6 +9,17 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="ml-2">
+              <el-dropdown size="small" split-button type="danger">
+                Actions
+                <el-dropdown-menu slot="dropdown">
+                 <el-dropdown-item>Action 1</el-dropdown-item>
+                 <el-dropdown-item>Action 2</el-dropdown-item>
+                 <el-dropdown-item>Action 3</el-dropdown-item>
+                 <el-dropdown-item>Action 4</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <div class="ml-auto">
                   <el-input placeholder="Please input" v-model="inputsearch" size="small" class="input-with-select">

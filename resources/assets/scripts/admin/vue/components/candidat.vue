@@ -13,6 +13,7 @@
     
         <el-table
             :data="tableCondidate"
+            v-loading="loading"
             style="width: 100%"
             max-height="450">
             <el-table-column
@@ -104,6 +105,7 @@ import axios from 'axios';
           currentPage: 1,
           per_page : 5,
           totatcondidate: 0,
+          loading: true,
 
       }),
       methods: {
@@ -158,7 +160,8 @@ import axios from 'axios';
         this.getcondidates().then((response) => {
             this.tableCondidate = response.data.data;
             this.totatcondidate = response.data.lenght;
-            console.log(response.data);
+            // console.log(response.data);
+            this.loading = false;
         })
       },
     }

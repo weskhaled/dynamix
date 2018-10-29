@@ -160,6 +160,7 @@ let webpackConfig = {
     new ExtractTextPlugin({
       filename: `styles/${assetsFilenames}.css`,
       allChunks: true,
+      ignoreOrder: true, 
       disable: (config.enabled.watcher),
     }),
     new webpack.ProvidePlugin({

@@ -16,14 +16,23 @@
           <el-button @click="visible = true" size="small">Open Dialog</el-button>
       </el-col>
   </el-row>
-  <el-row>
+  <el-row :gutter="5">
     <el-col :span="12">
-      <div class="card text-dark bg-light mb-3 p-0" style="max-width:100%">
-        <div class="card-header">Header</div>
-        <div class="card-body p-1">
-          <apexcharts id="vuechart-example" height="400px" width="100%" type="area" :options="chartOptions" :series="series"></apexcharts>
+    </el-col>
+    <el-col :span="12">
+        <el-card class="box-card" shadow="hover">
+        <div slot="header" class="clearfix d-flex bd-highlight px-3 py-1">
+            <div class="mr-auto bd-highlight">
+                <h4 style="margin: 0;line-height: 40px;">Card name</h4>
+            </div>
+            <div class="action bd-highlight">
+                <el-button class="" type="text">Operation button</el-button>
+            </div>
         </div>
-      </div>
+        <div class="p-0">
+            <apexcharts id="vuechart-example" height="400px" width="100%" type="area" :options="chartOptions" :series="series"></apexcharts>
+        </div>
+        </el-card>
     </el-col>
   </el-row>
   <!-- dialog -->
