@@ -24,14 +24,14 @@ button:focus {
     font-weight: 600;
     letter-spacing: 2px;
     display: inline-block;
-    line-height: 21px;
+    line-height: 26px;
     .light {
         font-weight: 200!important;
     }
 }
 .el-header {
-    background-color: #8b46ff;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     text-align: right;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
     &.fixed{
@@ -46,6 +46,12 @@ body.folded{
         width: calc(100% - 32px);
     }
 }
+@media only screen and (max-width: 782px) {
+    body.folded .el-header.fixed {
+        width: calc(100% - 0px);
+    }
+}
+
 .el-aside{
     width: auto;
     position: fixed;
@@ -59,7 +65,7 @@ body.folded{
 #app{
     .el-container{
         >.el-container{
-            margin-top: 60px;
+            margin-top: 50px;
         }
     }
 }
@@ -69,7 +75,7 @@ body.folded{
     width: 200px;
 }
 .el-menu-vertical-demo.scrolled {
-    height: calc(100vh - 148px);
+    height: calc(100vh - 138px);
     overflow: hidden;
     overflow-y: auto;
 }
@@ -145,6 +151,10 @@ body.folded{
 }
 .el-message{
     top: 38px;
+}
+.el-menu--horizontal>.el-submenu .el-submenu__title {
+    height: 50px;
+    line-height: 50px;
 }
 //  /*change scroll css*/
 //  :root {
@@ -283,4 +293,7 @@ body.folded{
 }
 .el-select .el-input {
     width: 110px;
+}
+.apexcharts-canvas,.apexcharts-svg{
+    width: 100%!important;
 }

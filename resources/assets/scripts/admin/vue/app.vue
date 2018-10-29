@@ -2,9 +2,9 @@
   <div id="app">
   <el-container>
            <el-header style="height: auto;" class="fixed">
-            <nav class="navbar navbar-expand-lg navbar-dark">
+            <nav class="navbar navbar-expand-lg navbar-light">
               <a class="navbar-brand" href="#">
-                <span class="logo-text text-white"><span class="light text-white">DYNA</span>WEB</span>
+                <span class="logo-text text-dark"><span class="light text-dark">DYNA</span>WEB</span>
               </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -22,8 +22,8 @@
                   </el-input>
               </div>
               <div class="ml-2">
-                <el-menu :default-active="page" :router="true" text-color="#fff" 
-                         background-color="#8b46ff" active-text-color="#eee"
+                <el-menu :default-active="page" :router="true" text-color="#000" 
+                         background-color="#fff" active-text-color="#00aaff"
                          class="el-menu-demo" mode="horizontal">
                   <el-submenu index="" v-if="user != null">
                     <template slot="title">
@@ -88,7 +88,7 @@
               </el-menu-item>
             </el-menu>
     </el-aside>
-    <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
+    <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'},{'height': 'calc(100vh - 82px)'}]">
       <div class="pl-0 pr-0 pt-2 pb-2">
         <router-view></router-view>
       </div>
