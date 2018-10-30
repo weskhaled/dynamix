@@ -1,23 +1,45 @@
 <template>
 <div class="container-fluid">
-  <el-row>
-      <el-col :span="24">
-          <h1 class="test">Admin Pages</h1>
-          <div class="block">
-              <span class="demonstration">Start date time 12:00:00, end date time 08:00:00</span>
-              <el-date-picker v-model="value7" size="small"
-                              type="datetimerange"
-                              align="right"
-                              start-placeholder="Start Date"
-                              end-placeholder="End Date"
-                              :default-time="['12:00:00', '08:00:00']">
-              </el-date-picker>
-          </div>
-          <el-button @click="visible = true" size="small">Open Dialog</el-button>
-      </el-col>
+  <el-row class="mt-3 mb-3">
+    <el-col :span="24">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>
+            <el-breadcrumb-item>Index</el-breadcrumb-item>
+        </el-breadcrumb>
+    </el-col>
   </el-row>
-  <el-row :gutter="5">
+  <el-row :gutter="15">
+    <el-col :span="8">
+        <el-card shadow="never">
+         Always
+        </el-card>
+    </el-col>
+    <el-col :span="8">
+        <el-card shadow="never">
+         Always
+        </el-card>
+    </el-col>
+    <el-col :span="8">
+        <el-card shadow="never">
+         Always
+        </el-card>
+    </el-col>
+  </el-row>
+  <el-row :gutter="15" class="mt-3">
     <el-col :span="12">
+      <el-card class="box-card" shadow="hover">
+        <div slot="header" class="clearfix d-flex bd-highlight px-3 py-1">
+            <div class="mr-auto bd-highlight">
+                <h4 style="margin: 0;line-height: 40px;">Card name</h4>
+            </div>
+            <div class="action bd-highlight">
+                <el-button class="" type="text">Operation button</el-button>
+            </div>
+        </div>
+        <div class="p-0">
+            <apexcharts id="vuechart-example" height="400px" width="100%" type="area" :options="chartOptions" :series="series"></apexcharts>
+        </div>
+      </el-card>
     </el-col>
     <el-col :span="12">
         <el-card class="box-card" shadow="hover">
@@ -251,9 +273,6 @@ import VueApexCharts from 'vue-apexcharts';
           getsliders(){
             return axios.get(wpApiSettings.root+'wp/v2/slider',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
           },
-          getmediabyid(id){
-            return axios.post(wpApiSettings.root+'wp/v2/media/'+id,{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
-          },
       },
       mounted: function() {
         let self = this;
@@ -275,30 +294,6 @@ import VueApexCharts from 'vue-apexcharts';
         this.$nextTick(function () {
           // self.$apexcharts.exec('vuechart-example', 'updateSeries')
         })
-        
-        // this.$apexcharts.render();
-        // axios.get(wpApiSettings.root+'wp/v2/media',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }}).then((response) => {
-        //     console.log(response.data);
-        // })
-        // .catch((e) => {
-        //     console.error(e)
-        // })
-        // axios.get(wpApiSettings.root+'wp/v2/slider',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }}).then((response) => {
-        //     console.log(response.data);
-        // })
-        // .catch((e) => {
-        //     console.error(e)
-        // })
-
-        // var params = new URLSearchParams();
-        // params.append('action', 'get_modal');
-        // axios.post(ajax_object.ajax_url,params).then((response) => {
-        // this.sliders = response.data;
-        // // console.log(response.data[0].post_content);
-        // })
-        // .catch((e) => {
-        // console.error(e)
-        // })
       },
     }
 </script>

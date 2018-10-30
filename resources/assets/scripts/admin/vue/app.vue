@@ -3,9 +3,9 @@
   <el-container>
            <el-header style="height: auto;" class="fixed">
             <nav class="navbar navbar-expand-lg navbar-light">
-              <a class="navbar-brand" href="#">
-                <span class="logo-text text-dark"><span class="light text-dark">DYNA</span>WEB</span>
-              </a>
+              <router-link tag="a" class="navbar-brand" class-active="active" to="/" exact>
+                  <span class="logo-text text-dark"><span class="light text-dark"><i class="ti-crown mr-1"></i>DYNA</span>MX</span>
+              </router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -53,9 +53,9 @@
         </el-header>
     <el-container>
     <el-aside width="auto">
-            <el-menu size="small" default-active="2" class="el-menu-vertical-demo menu-collapse" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-              <el-menu-item index="4" @click="toggleSidebar()">
-                <i :class="isCollapse ? 'pg-menu' : 'pg-close'"></i>
+            <el-menu :show-timeout="100" :hide-timeout="100" size="small" default-active="2" class="el-menu-vertical-demo menu-collapse" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+              <el-menu-item index="4" @click="toggleSidebar()" class="text-center">
+                <i :class="isCollapse ? 'ti-shift-right' : 'ti-shift-left'"></i>
                 <span slot="title">{{isCollapse ? 'Open Navigation' : 'Close Navigation' }}</span>
               </el-menu-item>
             </el-menu>

@@ -6,8 +6,10 @@ import Vue from 'vue';
 import 'bootstrap';
 import VueApexCharts from 'vue-apexcharts'
 import {VueMasonryPlugin} from 'vue-masonry';
+import VueFeatherIcon from 'vue-feather-icon'
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
+Vue.use(VueFeatherIcon);
 Vue.use(VueApexCharts)
 Vue.use(ElementUI, { locale });
 Vue.use(VueMasonryPlugin);

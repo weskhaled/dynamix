@@ -109,6 +109,7 @@
     "yargs": "~11.0.0"
   },
   "dependencies": {
+    "@fancyapps/fancybox": "^3.5.2",
     "animate.css": "^3.7.0",
     "apexcharts": "^2.1.8",
     "axios": "^0.18.0",
@@ -120,6 +121,7 @@
     "popper.js": "^1.14.4",
     "vue": "^2.5.17",
     "vue-apexcharts": "^1.2.2",
+    "vue-feather-icon": "^1.2.0",
     "vue-masonry": "^0.11.6",
     "vue-router": "^3.0.1"
   }

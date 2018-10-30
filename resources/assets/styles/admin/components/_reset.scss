@@ -1,0 +1,45 @@
+// @import url('https://fonts.googleapis.com/css?family=Montserrat:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,900');
+// @import url('https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,700,700i,900,900i');
+// @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,300,300i,400,400i,600,600i,700,700i,900,900i');
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* reset */
+#app {
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #1c1c1c;
+    background-color: #fff;
+    overflow-x: hidden;
+    font-weight: 400;
+    header{
+        .input-with-select{
+            max-width: 350px;
+        }
+    }
+}
+.el-popper{
+    max-width: 250px;
+}
+.wp-person a:focus .gravatar, a:focus, a:focus .media-icon img {
+    box-shadow: none!important;
+}
+button:focus {
+    outline: none!important;
+    outline: none!important;
+}
+#wpcontent{
+    padding-left: 0!important;
+}
+#wpbody-content {
+    padding-bottom: 0!important;
+}
+#wpbody {
+    background-color: #ffffff!important;
+}
+#wpfooter{
+    display: none!important;
+}

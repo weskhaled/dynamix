@@ -3,17 +3,10 @@
 @import '../fonts/et-line-font.css';
 @import '../fonts/feather-icons.css';
 @import '../fonts/pages-icons.css';
-@import "./layout.scss";
-@import "~bootstrap/scss/bootstrap";
-// @import '~swiper/dist/css/swiper.min.css';
+@import '../fonts/themify-icons.css';
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~element-ui/lib/theme-chalk/index.css';
+@import '~swiper/dist/css/swiper.min.css';
+@import "~animate.css/animate.css";
 
-// @import '~element-ui/lib/theme-chalk/index.css';
-// @import '~swiper/dist/css/swiper.min.css';
-// /** Import everything from layouts */
-// @import "layouts/reset";
-// @import "layouts/global";
-
-// @import '../fonts/font-awesome.css';
-// @import '../fonts/et-line-font.css';
-// @import '../fonts/feather-icons.css';
-// @import '../fonts/pages-icons.css';
+@import "layout";
