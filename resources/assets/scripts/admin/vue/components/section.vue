@@ -1,8 +1,16 @@
 <template>
 <div class="container-fluid">
+    <el-row :gutter="15" class="mt-3 mb-3">
+      <el-col :span="24">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>
+              <el-breadcrumb-item>Sections</el-breadcrumb-item>
+          </el-breadcrumb>
+      </el-col>
+    </el-row> 
     <el-row :gutter="5">
       <el-col :span="24">
-          <el-tabs type="card" v-model="activeName" @tab-click="handleClickTab">
+          <el-tabs v-model="activeName" @tab-click="handleClickTab">
             <el-tab-pane label="Header" name="header">
                 <el-row :gutter="5">
                   <el-col :span="24">

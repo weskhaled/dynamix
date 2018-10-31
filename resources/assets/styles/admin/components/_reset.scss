@@ -20,10 +20,46 @@
             max-width: 350px;
         }
     }
+    .el-container{
+        aside{
+            li{
+                svg{
+                    width: 24px;
+                    height: 18px;
+                    color: #909399;
+                }
+                &.is-active{
+                    svg{
+                        color: #409EFF;
+                    }
+                }
+            }
+        }
+    }
 }
 .el-popper{
     max-width: 250px;
 }
+.el-tabs__item{
+    height: 36px;
+    line-height: 36px;
+}
+.el-tabs__nav-next, .el-tabs__nav-prev{
+    line-height: 36px;
+}
+// .grid-item[data-height="1"] {
+//     height: 240px;
+// }
+// .grid-item[data-width="1"] {
+//     width: 320px;
+// }
+.el-upload {
+    width: 100%;
+    .el-upload-dragger{
+        width: 100%;
+    }
+}
+
 .wp-person a:focus .gravatar, a:focus, a:focus .media-icon img {
     box-shadow: none!important;
 }

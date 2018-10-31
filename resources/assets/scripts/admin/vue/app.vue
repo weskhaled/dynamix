@@ -39,7 +39,7 @@
                   <el-submenu index="" v-if="user != null">
                     <template slot="title">
                       {{ user.name }}
-                      <img style="border-radius: 50%;margin: 0 5px;" :src="user.avatar_urls[24]" height="26" width="26">
+                      <img style="border-radius: 50%;margin: 0 5px;margin-top: -10px;" :src="user.avatar_urls[24]" height="26" width="26">
                     </template>
                     <el-menu-item index="/profile">
                       Profile
@@ -66,7 +66,7 @@
               </el-menu-item>
               <el-submenu size="small" index="1">
                 <template slot="title">
-                  <i class="el-icon-news"></i>
+                  <settings-icon class="custom-class"></settings-icon>
                   <span slot="title">Generale</span>
                 </template>
                 <el-menu-item index="/section">Section</el-menu-item>
@@ -90,7 +90,7 @@
                 <span slot="title">Medias</span>
               </el-menu-item>
               <el-menu-item index="/condidate">
-                <i class="fa fa-users"></i>
+                <users-icon class="custom-class"></users-icon>
                 <span slot="title">Condidates</span>
               </el-menu-item>
               <el-menu-item index="3" disabled>
@@ -110,8 +110,18 @@
 </template>
 <script>
 import axios from 'axios';
+import {
+   UsersIcon,
+   FileIcon,
+   SettingsIcon,
+   } from 'vue-feather-icons';
     export default {
       name: "app",
+      components: {
+        UsersIcon,
+        FileIcon,
+        SettingsIcon,
+      },
       data: () => ({
          isCollapse: true,
          inputsearch: '',
@@ -124,7 +134,7 @@ import axios from 'axios';
           let self = this;
           this.isCollapse = !this.isCollapse;
           setTimeout(function () { 
-            self.$root.$emit("message", self.isCollapse)
+            self.$root.$emit("redrawVueMasonry", self.isCollapse)
           } , 300);
         },
         handleSelect(key, keyPath) {
