@@ -26,7 +26,7 @@
         <el-card :class="closedcard ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
           <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
               <div class="mr-auto bd-highlight">
-                  <h4 style="margin: 0px;line-height: 34px;font-size: 14px;">Add new</h4>
+                  <h4>Add new</h4>
               </div>
               <div class="action bd-highlight">
                   <el-button class="py-1" type="text">
@@ -54,21 +54,32 @@
         <el-card :class="((closedmediacard[index]) && (closedmediacard[index].closedcard)) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
           <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
               <div class="mr-auto bd-highlight">
-                  <h4 style="margin: 0px;line-height: 34px;font-size: 14px;">{{media.name}}</h4>
+                  <h4>{{media.name}}</h4>
               </div>
               <div class="action bd-highlight">
-                  <el-button class="py-1" type="text">
-                    <more-horizontal-icon class=""></more-horizontal-icon>
-                  </el-button>
-                  <el-button class="py-1" type="text" @click="media.closedcard = !media.closedcard;closedcard = !closedcard;closedcard = !closedcard;closedmediacard[index] = {'media_id' : media.id,'closedcard': !!media.closedcard};reDraw()">
-                    <chevron-up-icon class="" v-if="!media.closedcard"></chevron-up-icon>
-                    <chevron-down-icon class="" v-if="media.closedcard"></chevron-down-icon>
-                  </el-button>
+                <el-tooltip content="Actions" placement="top">
+                  <el-dropdown class="py-1" trigger="click">
+                      <el-button type="text" class="py-0">
+                        <more-horizontal-icon class=""></more-horizontal-icon>
+                      </el-button>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>Action 1</el-dropdown-item>
+                        <el-dropdown-item>Action 2</el-dropdown-item>
+                        <el-dropdown-item>Action 3</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </el-tooltip>
+                  <el-tooltip :content="media.closedcard ? 'Open Card' : 'Close Card'" placement="top">
+                    <el-button class="py-1" type="text" @click="media.closedcard = !media.closedcard;closedcard = !closedcard;closedcard = !closedcard;closedmediacard[index] = {'media_id' : media.id,'closedcard': !!media.closedcard};reDraw()">
+                      <chevron-up-icon v-if="!media.closedcard"></chevron-up-icon>
+                      <chevron-down-icon class="" v-if="media.closedcard"></chevron-down-icon>
+                    </el-button>
+                  </el-tooltip>
               </div>
           </div>
           <div class="clearfix">
             <figure class="effect-zoe">
-              <img :src="media.url" class="img-fluid img-fancy" :alt="media.name">
+              <img :src="media.url" class="img-fluid img-fancy" :alt="media.name" @click="viewimg = index;visible = true;" >
               <figcaption>
                 <div class="row m-0">
                   <div class="col-sm-7 p-0">
@@ -79,7 +90,7 @@
                       <el-button class="ml-1" size="mini" type="primary" circle>
                         <i class="fa fa-eye"></i>
                       </el-button>
-                      <el-button class="ml-1" @click="visible = true;viewimg = media" size="mini" type="info" circle>
+                      <el-button class="ml-1" @click="viewimg = index;visible = true;" size="mini" type="info" circle>
                         <i class="fa fa-edit"></i>
                       </el-button>
                       <el-button class="ml-1" @click="ConfirmDelete(media)" size="mini" type="danger" circle>
@@ -95,17 +106,48 @@
       </el-col>
     </el-row>
     <!-- dialog -->
-    <el-dialog :visible.sync="visible" :title="viewimg.name">
-        <el-row>
-          <div class="text-center">
+    <el-dialog :visible.sync="visible" :title="allmedias[viewimg] ? allmedias[viewimg].name : 'Image Preview'">
+        <!-- <el-row>
+          <div class="text-center" style="margin: -30px -20px">
             <img :src="viewimg.url" class="img-fluid">
           </div>
+        </el-row> -->
+        <el-row style="margin: -30px -20px">
+            <div class="swiper-container bg-light">
+              <!-- Additional required wrapper -->
+              <div class="swiper-wrapper" style="height: 450px">
+                <!-- It is important to set "left" style prop on every slide -->
+
+                <div class="swiper-slide"
+                  v-for="(slide, index) in allmedias"
+                  :key="index"
+                >
+                    <div class="swiper-zoom-container bg-light">
+                        <img :src="slide.url" class="img-fluid">
+                    </div>
+                </div>
+                
+              </div>
+              <!-- If we need pagination -->
+              <div class="swiper-pagination"></div>
+
+              <!-- If we need navigation buttons -->
+                <nav class="">
+                    <a class="prev text-right" href="javascript:void(0)">
+                        <span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
+                    </a>
+                    <a class="next text-left" href="javascript:void(0)">
+                        <span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
+                    </a>
+                </nav>
+            </div>
         </el-row>
     </el-dialog>
 </div>  
 </template>
 <script>
 import axios from 'axios';
+import Swiper from 'swiper';
 import { MoreHorizontalIcon,ChevronUpIcon,ChevronDownIcon } from 'vue-feather-icons';
 // import $ from 'jquery';
 export default {
@@ -123,10 +165,50 @@ export default {
         visible : false,
         closedcard :false,
         closedmediacard : [],
-        viewimg: {},
+        viewimg: null,
         confirmdelete :false,
         fileList:[],
-  }),      
+        swiper_medias : null,
+  }),
+  watch : {
+    visible : function (val) {
+      let self = this;
+      if(val){
+        this.$nextTick(function () {
+          this.swiper_medias = new Swiper('.swiper-container', {
+            init : false,
+            navigation: {
+              nextEl: '.next',
+              prevEl: '.prev',
+            },
+            // autoHeight : true,
+            pagination: {
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable : true,
+            },
+            spaceBetween: 0,
+            slidesPerView :1,
+            zoom: {
+              maxRatio: 5,
+            },
+            on : {
+              transitionEnd : function(){
+                 self.viewimg = this.activeIndex;
+              },
+            },
+          });
+          self.swiper_medias.init();
+          self.swiper_medias.slideTo(self.viewimg);
+        })
+      } else {
+        if(self.swiper_medias instanceof Swiper){
+          self.swiper_medias.destroy(true, false);
+        }
+      }
+      // console.log('new: %s, old: %s', val, oldVal);
+    },
+  },    
   methods: {
     getallmedias(){
       return axios.post(wpApiSettings.root+'dynamix/v1/allmedias',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
@@ -145,7 +227,7 @@ export default {
       // console.log(response); 
       self.allmedias = response;
       this.allmedias.map(x => {
-        x.closedcard = true;
+        x.closedcard = false;
         // console.log(x);
       });
       // self.allmedias[0].closedcard = false;

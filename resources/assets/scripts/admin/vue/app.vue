@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="dynamix">
   <el-container>
            <el-header style="height: auto;" class="fixed">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -39,7 +39,7 @@
                   <el-submenu index="" v-if="user != null">
                     <template slot="title">
                       {{ user.name }}
-                      <img style="border-radius: 50%;margin: 0 5px;margin-top: -10px;" :src="user.avatar_urls[24]" height="26" width="26">
+                      <img style="border-radius: 50%;margin: 0 5px;margin-top: -5px;" :src="user.avatar_urls[24]" height="26" width="26">
                     </template>
                     <el-menu-item index="/profile">
                       Profile
