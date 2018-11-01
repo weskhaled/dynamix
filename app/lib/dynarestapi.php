@@ -206,11 +206,20 @@ function post_media( \WP_REST_Request $request ) {
 
 
 function allmedias( \WP_REST_Request $request ) {
+	$offset = 0 ;
+	$per_page = 10 ;
+	if(isset($request['offset'])){
+		$offset = $request['offset'];
+	}
+	if(isset($request['per_page'])){
+		$per_page = $request['per_page'];
+	}
 	$query_images_args = array(
 		'post_type'      => 'attachment',
 		'post_mime_type' => 'image',
 		'post_status'    => 'inherit',
-		'posts_per_page' => - 1,
+		'posts_per_page' => $per_page,
+		'offset' => $offset,
 	);
 	
 	$query_images = new \WP_Query( $query_images_args );
@@ -224,7 +233,19 @@ function allmedias( \WP_REST_Request $request ) {
 		$images[] = $img;
 	}
       
-    return $images;
+	// return $images;
+	$query_posts_count = new \WP_Query( array(
+		'post_type'      => 'attachment',
+		'post_status'    => 'inherit',
+		'posts_per_page' => -1
+	) );
+	$totlal = count($query_posts_count->posts);
+    return array(
+		'lenght' => $totlal,
+		// 'lenght' => wp_count_posts('condidate')->pending,
+		'data' => $images,
+		'page' => ($offset/$per_page)+1,
+	);
 }
 
 function getcondidates( \WP_REST_Request $request ) {

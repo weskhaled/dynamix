@@ -14,10 +14,10 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="currentPageMedias"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-sizes="[10, 50, 100, 'All']"
+          :page-size="per_page"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="50000">
+          :total="totalmedias">
         </el-pagination>
       </el-col>
     </el-row>
@@ -51,7 +51,7 @@
         </el-card>
       </el-col>
       <el-col :span="8" :sm="24" :md="12" :lg="6" class="grid-item text-center" v-masonry-tile v-for="(media, index) in allmedias" :key="index">
-        <el-card :class="((closedmediacard[index]) && (closedmediacard[index].closedcard)) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
+        <el-card :class="!(closedmediacard.indexOf(media.id) === -1) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
           <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
               <div class="mr-auto bd-highlight">
                   <h4>{{media.name}}</h4>
@@ -69,8 +69,8 @@
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-tooltip>
-                  <el-tooltip :content="media.closedcard ? 'Open Card' : 'Close Card'" placement="top">
-                    <el-button class="py-1" type="text" @click="media.closedcard = !media.closedcard;closedcard = !closedcard;closedcard = !closedcard;closedmediacard[index] = {'media_id' : media.id,'closedcard': !!media.closedcard};reDraw()">
+                  <el-tooltip :content="!(closedmediacard.indexOf(media.id) === -1) ? 'Open Card' : 'Close Card'" placement="top">
+                    <el-button class="py-1" type="text" @click="ToggleCard(media.id)">
                       <chevron-up-icon v-if="!media.closedcard"></chevron-up-icon>
                       <chevron-down-icon class="" v-if="media.closedcard"></chevron-down-icon>
                     </el-button>
@@ -106,21 +106,17 @@
       </el-col>
     </el-row>
     <!-- dialog -->
-    <el-dialog :visible.sync="visible" :title="allmedias[viewimg] ? allmedias[viewimg].name : 'Image Preview'">
-        <!-- <el-row>
-          <div class="text-center" style="margin: -30px -20px">
-            <img :src="viewimg.url" class="img-fluid">
-          </div>
-        </el-row> -->
+    <el-dialog width="80%" top="7vh" :visible.sync="visible" :title="allmedias[viewimg] ? allmedias[viewimg].name : 'Image Preview'">
         <el-row style="margin: -30px -20px">
             <div class="swiper-container bg-light">
               <!-- Additional required wrapper -->
-              <div class="swiper-wrapper" style="height: 450px">
+              <div class="swiper-wrapper" style="height: 550px">
                 <!-- It is important to set "left" style prop on every slide -->
 
                 <div class="swiper-slide"
                   v-for="(slide, index) in allmedias"
                   :key="index"
+                  :data-hash="'/medias/slider_'+slide.id"
                 >
                     <div class="swiper-zoom-container bg-light">
                         <img :src="slide.url" class="img-fluid">
@@ -161,6 +157,8 @@ export default {
       // reactive data property of the component.
         wpApiSettings: wpApiSettings,
         allmedias : [],
+        totalmedias: 0,
+        per_page : 10,
         currentPageMedias : 1,
         visible : false,
         closedcard :false,
@@ -181,7 +179,11 @@ export default {
               nextEl: '.next',
               prevEl: '.prev',
             },
+            // hashNavigation: {
+            //   replaceState: true,
+            // },
             // autoHeight : true,
+            grabCursor : true,
             pagination: {
               el: '.swiper-pagination',
               type: 'bullets',
@@ -210,11 +212,25 @@ export default {
     },
   },    
   methods: {
-    getallmedias(){
-      return axios.post(wpApiSettings.root+'dynamix/v1/allmedias',{},{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
+    getallmedias(data={}){
+      return axios.post(wpApiSettings.root+'dynamix/v1/allmedias',data,{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
     },
     deletepost(id){
       return axios.delete(wpApiSettings.root+'wp/v2/media/'+id+'?force=true',{headers: { 'X-WP-Nonce': wpApiSettings.nonce }})  
+    },
+    ToggleCard(id){
+      let self = this ; 
+      this.allmedias.map(media => {
+        if(media.id == id){
+          media.closedcard = !media.closedcard;
+          if(self.closedmediacard.indexOf(id) === -1){
+            self.closedmediacard.push(media.id);
+          } else {
+            self.closedmediacard.splice(self.closedmediacard.indexOf(media.id), 1)
+          }
+        }
+      });
+      self.reDraw();
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -224,33 +240,48 @@ export default {
     },
     handleSuccess(response) {
       let self = this;
-      // console.log(response); 
       self.allmedias = response;
       this.allmedias.map(x => {
         x.closedcard = false;
-        // console.log(x);
       });
-      // self.allmedias[0].closedcard = false;
-      this.$redrawVueMasonry();
-      // let imgs = response.image;
-      // imgs.forEach(function (value, i) {
-      //   console.log('%d: %s', i, value);
-      //   self.fileList.push({'name': i, 'url':value});
-      // });
+      this.reDraw();
     },
     handlePictureCardPreview(file) {
       console.log(file);
     },
     handleSizeChange(val) {
-      console.log(`${val} items per page`);
+      // console.log(val);
+      this.per_page = val;
+      if(isNaN(val)){ this.per_page = this.totalmedias }
+      this.getallmedias({'offset': 0,'per_page': this.per_page}).then((response) => {
+          this.allmedias = response.data.data;
+          this.totalmedias = response.data.lenght;
+          this.currentPageMedias = response.data.page;
+          this.allmedias.map(x => {
+            x.closedcard = false;
+          });
+          this.reDraw();
+      })
     },
     handleCurrentChange(val) {
       console.log(`current page: ${val}`);
+      this.getallmedias({'offset': (val-1)*this.per_page,'per_page': this.per_page}).then((response) => {
+          this.allmedias = response.data.data;
+          this.totalmedias = response.data.lenght;
+          this.currentPageMedias = response.data.page;
+          this.allmedias.map(x => {
+            x.closedcard = false;
+          });
+          this.reDraw();
+      })
     },
     reDraw(){
-      this.$nextTick(function () {
-        this.$redrawVueMasonry();
-      })
+      let self = this;
+      setTimeout(function () { 
+        self.$nextTick(function () {
+          self.$redrawVueMasonry();
+        })
+      } , 201);
     },
     ConfirmDelete(media) {
       console.log(media);
@@ -263,7 +294,7 @@ export default {
           console.log(response);
           // this.allmedias = response.data;
           this.getallmedias().then((response) => {
-            this.allmedias = response.data;
+            this.allmedias = response.data.data;
             this.reDraw();
           })
           this.$message({
@@ -292,7 +323,9 @@ export default {
         this.reDraw();
     })
     this.getallmedias().then((response) => {
-        this.allmedias = response.data;
+        this.allmedias = response.data.data;
+        this.totalmedias = response.data.lenght;
+        this.currentPageMedias = response.data.page;
         this.allmedias.map(x => {
           x.closedcard = false;
           // console.log(x);
