@@ -106,7 +106,7 @@
       </el-col>
     </el-row>
     <!-- dialog -->
-    <el-dialog width="80%" top="7vh" :visible.sync="visible" :title="allmedias[viewimg] ? allmedias[viewimg].name : 'Image Preview'">
+    <el-dialog width="80%" top="40px" :visible.sync="visible" :title="allmedias[viewimg] ? allmedias[viewimg].name : 'Image Preview'">
         <el-row style="margin: -30px -20px">
             <div class="swiper-container bg-light">
               <!-- Additional required wrapper -->
