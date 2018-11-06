@@ -23,15 +23,20 @@
 }
 
 .dynamix{
-    .el-dialog{
-        .el-dialog__header{
-            padding: 10px;
-            box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
-            position: relative;
-            z-index: 2;
-            .el-dialog__headerbtn{
-                top: 12px;
-                right: 12px;
+    .el-dialog__wrapper {
+        top: 32px;
+        left: 35px;
+        z-index: 999999;
+        .el-dialog{
+            .el-dialog__header{
+                padding: 10px;
+                box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+                position: relative;
+                z-index: 2;
+                .el-dialog__headerbtn{
+                    top: 12px;
+                    right: 12px;
+                }
             }
         }
     }
