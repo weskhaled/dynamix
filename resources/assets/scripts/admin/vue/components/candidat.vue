@@ -15,7 +15,7 @@
             :data="tableCondidate"
             v-loading="loading"
             style="width: 100%"
-            max-height="450">
+            :max-height="maxheight">
             <el-table-column
             fixed
             prop="id"
@@ -106,6 +106,7 @@ import axios from 'axios';
           per_page : 5,
           totatcondidate: 0,
           loading: true,
+          maxheight: window.innerHeight - 184,
 
       }),
       methods: {
