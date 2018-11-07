@@ -90,7 +90,7 @@
                       <el-button class="ml-1" size="mini" type="primary" circle>
                         <i class="fa fa-eye"></i>
                       </el-button>
-                      <el-button class="ml-1" @click="viewimg = index;visible = true;" size="mini" type="info" circle>
+                      <el-button class="ml-1" @click="imgtoedit = media.url;visibleeditor = true;" size="mini" type="info" circle>
                         <i class="fa fa-edit"></i>
                       </el-button>
                       <el-button class="ml-1" @click="ConfirmDelete(media)" size="mini" type="danger" circle>
@@ -139,9 +139,97 @@
             </div>
         </el-row>
     </el-dialog>
+    <!-- dialog -->
+    <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview">
+        <el-row style="margin: -30px -20px">
+          <div id="tui-image-editor" style="min-height: calc(100vh - 85px)"></div>
+        </el-row>
+    </el-dialog>
 </div>  
 </template>
 <script>
+// var whiteTheme = {
+//     'common.bi.image': 'https://uicdn.toast.com/toastui/img/tui-image-editor-bi.png',
+//     'common.bisize.width': '251px',
+//     'common.bisize.height': '21px',
+//     'common.backgroundImage': './img/bg.png',
+//     'common.backgroundColor': '#fff',
+//     'common.border': '1px solid #c1c1c1',
+
+//     // header
+//     'header.backgroundImage': 'none',
+//     'header.backgroundColor': 'transparent',
+//     'header.border': '0px',
+
+//     // load button
+//     'loadButton.backgroundColor': '#fff',
+//     'loadButton.border': '1px solid #ddd',
+//     'loadButton.color': '#222',
+//     'loadButton.fontFamily': '\'Noto Sans\', sans-serif',
+//     'loadButton.fontSize': '12px',
+
+//     // download button
+//     'downloadButton.backgroundColor': '#fdba3b',
+//     'downloadButton.border': '1px solid #fdba3b',
+//     'downloadButton.color': '#fff',
+//     'downloadButton.fontFamily': '\'Noto Sans\', sans-serif',
+//     'downloadButton.fontSize': '12px',
+
+//     // main icons
+//     'menu.normalIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-d.svg',
+//     'menu.normalIcon.name': 'icon-d',
+//     'menu.activeIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-b.svg',
+//     'menu.activeIcon.name': 'icon-b',
+//     'menu.disabledIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-a.svg',
+//     'menu.disabledIcon.name': 'icon-a',
+//     'menu.hoverIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-c.svg',
+//     'menu.hoverIcon.name': 'icon-c',
+//     'menu.iconSize.width': '24px',
+//     'menu.iconSize.height': '24px',
+
+//     // submenu primary color
+//     'submenu.backgroundColor': 'transparent',
+//     'submenu.partition.color': '#e5e5e5',
+
+//     // submenu icons
+//     'submenu.normalIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-d.svg',
+//     'submenu.normalIcon.name': 'icon-d',
+//     'submenu.activeIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-b.svg',
+//     'submenu.activeIcon.name': 'icon-b',
+//     'submenu.iconSize.width': '32px',
+//     'submenu.iconSize.height': '32px',
+
+//     // submenu labels
+//     'submenu.normalLabel.color': '#858585',
+//     'submenu.normalLabel.fontWeight': 'normal',
+//     'submenu.activeLabel.color': '#000',
+//     'submenu.activeLabel.fontWeight': 'normal',
+
+//     // checkbox style
+//     'checkbox.border': '1px solid #ccc',
+//     'checkbox.backgroundColor': '#fff',
+
+//     // rango style
+//     'range.pointer.color': '#333',
+//     'range.bar.color': '#ccc',
+//     'range.subbar.color': '#606060',
+
+//     'range.disabledPointer.color': '#d3d3d3',
+//     'range.disabledBar.color': 'rgba(85,85,85,0.06)',
+//     'range.disabledSubbar.color': 'rgba(51,51,51,0.2)',
+
+//     'range.value.color': '#000',
+//     'range.value.fontWeight': 'normal',
+//     'range.value.fontSize': '11px',
+//     'range.value.border': '0',
+//     'range.value.backgroundColor': '#f5f5f5',
+//     'range.title.color': '#000',
+//     'range.title.fontWeight': 'lighter',
+
+//     // colorpicker style
+//     'colorpicker.button.border': '0px',
+//     'colorpicker.title.color': '#000',
+// };
 import axios from 'axios';
 import Swiper from 'swiper';
 import { MoreHorizontalIcon,ChevronUpIcon,ChevronDownIcon } from 'vue-feather-icons';
@@ -166,7 +254,9 @@ export default {
         viewimg: null,
         confirmdelete :false,
         fileList:[],
-        swiper_medias : null,
+        swiper_medias: null,
+        visibleeditor: false,
+        imgtoedit:null,
   }),
   watch : {
     visible : function (val) {
@@ -209,6 +299,44 @@ export default {
         }
       }
       // console.log('new: %s, old: %s', val, oldVal);
+    },
+    visibleeditor : function(val){
+      let self = this;
+      if(val){
+        this.$nextTick(function () {
+          var ImageEditor = require('tui-image-editor');
+          var instance = new ImageEditor(document.querySelector('#tui-image-editor'), {
+              cssMaxWidth: 700,
+              cssMaxHeight: 500,
+              selectionStyle: {
+                  cornerSize: 20,
+                  rotatingPointOffset: 70,
+              },
+          });
+          instance.loadImageFromURL(self.imgtoedit, 'My sample image')
+          // var ImageEditor = require('tui-image-editor');
+          // // var whiteTheme = require('tui-image-editor/examples/js/theme/white-theme.js');
+          // new ImageEditor(document.querySelector('#tui-image-editor'), {
+          //     includeUI: {
+          //         loadImage: {
+          //             path: self.imgtoedit,
+          //             // path: 'http://dynamix.develop/wp-content/uploads/2018/09/s-jobs.jpg',
+          //             // path: null,
+          //             name: 'SampleImage',
+          //         },
+          //         theme: whiteTheme, // or whiteTheme
+          //         initMenu: 'filter',
+          //         menuBarPosition: 'right',
+          //     },
+          //     cssMaxWidth: 700,
+          //     cssMaxHeight: 500,
+          //     selectionStyle: {
+          //         cornerSize: 20,
+          //         rotatingPointOffset: 70,
+          //     },
+          // });
+        });
+      }
     },
   },    
   methods: {
