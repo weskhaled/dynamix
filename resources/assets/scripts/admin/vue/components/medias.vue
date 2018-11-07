@@ -371,7 +371,7 @@ export default {
           self.myedit.crop(self.myedit.getCropzoneRect()).then(() => {
               self.myedit.stopDrawingMode();
               // resizeEditor();
-              this.$refs.tuieditor.removeEventListener('keypress',function(){ return false; });
+              self.$refs.tuieditor.removeEventListener('keypress',function(){ return false; });
           });
         }
       });
