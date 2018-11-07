@@ -158,7 +158,7 @@
                     </div>
               </div>
               <div class="image-editor-main-container" style="height: 100%">
-                  <div class="tui-image-editor" ref="tuieditor" style="height: 100%">
+                  <div class="tui-image-editor" ref="tuieditor" tabindex="1" style="height: 100%">
                 </div>
               </div>
             </div>
@@ -359,7 +359,22 @@ export default {
       this.$redrawVueMasonry();
     },
     imgCorp(){
+      let self = this;
       this.myedit.startDrawingMode('CROPPER');
+      this.$refs.tuieditor.addEventListener('keypress', function (e) {
+        // do something
+        console.log(e);
+        var key = e.which || e.keyCode;
+        if (key === 13) { // 13 is enter
+          // code for enter
+          console.log(key);
+          self.myedit.crop(self.myedit.getCropzoneRect()).then(() => {
+              self.myedit.stopDrawingMode();
+              // resizeEditor();
+              this.$refs.tuieditor.removeEventListener('keypress',function(){ return false; });
+          });
+        }
+      });
     },
   },
   computed: {
