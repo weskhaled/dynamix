@@ -142,94 +142,35 @@
     <!-- dialog -->
     <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview">
         <el-row style="margin: -30px -20px">
-          <div id="tui-image-editor" style="min-height: calc(100vh - 85px)"></div>
+          <div class="image-editor-wrap" style="height: calc(100vh - 85px)">
+            <div id="image-editor" class="image-editor-container right" style="height: 100%;max-height: 100%;overflow: auto;">
+              <div class="image-editor-controls row">
+                  <div class="col ml-auto">
+                      <el-dropdown size="small" split-button type="danger" @click="imgCorp()">
+                        Actions
+                        <el-dropdown-menu slot="dropdown">
+                         <el-dropdown-item>Action 1</el-dropdown-item>
+                         <el-dropdown-item>Action 2</el-dropdown-item>
+                         <el-dropdown-item>Action 3</el-dropdown-item>
+                         <el-dropdown-item>Action 4</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
+              </div>
+              <div class="image-editor-main-container" style="height: 100%">
+                  <div class="tui-image-editor" ref="tuieditor" style="height: 100%">
+                </div>
+              </div>
+            </div>
+            <!-- <div id="tui-image-editor" ref="tuieditor" style="height: calc(100vh - 85px)"></div> -->
+          </div>
         </el-row>
     </el-dialog>
 </div>  
 </template>
 <script>
-// var whiteTheme = {
-//     'common.bi.image': 'https://uicdn.toast.com/toastui/img/tui-image-editor-bi.png',
-//     'common.bisize.width': '251px',
-//     'common.bisize.height': '21px',
-//     'common.backgroundImage': './img/bg.png',
-//     'common.backgroundColor': '#fff',
-//     'common.border': '1px solid #c1c1c1',
-
-//     // header
-//     'header.backgroundImage': 'none',
-//     'header.backgroundColor': 'transparent',
-//     'header.border': '0px',
-
-//     // load button
-//     'loadButton.backgroundColor': '#fff',
-//     'loadButton.border': '1px solid #ddd',
-//     'loadButton.color': '#222',
-//     'loadButton.fontFamily': '\'Noto Sans\', sans-serif',
-//     'loadButton.fontSize': '12px',
-
-//     // download button
-//     'downloadButton.backgroundColor': '#fdba3b',
-//     'downloadButton.border': '1px solid #fdba3b',
-//     'downloadButton.color': '#fff',
-//     'downloadButton.fontFamily': '\'Noto Sans\', sans-serif',
-//     'downloadButton.fontSize': '12px',
-
-//     // main icons
-//     'menu.normalIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-d.svg',
-//     'menu.normalIcon.name': 'icon-d',
-//     'menu.activeIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-b.svg',
-//     'menu.activeIcon.name': 'icon-b',
-//     'menu.disabledIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-a.svg',
-//     'menu.disabledIcon.name': 'icon-a',
-//     'menu.hoverIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-c.svg',
-//     'menu.hoverIcon.name': 'icon-c',
-//     'menu.iconSize.width': '24px',
-//     'menu.iconSize.height': '24px',
-
-//     // submenu primary color
-//     'submenu.backgroundColor': 'transparent',
-//     'submenu.partition.color': '#e5e5e5',
-
-//     // submenu icons
-//     'submenu.normalIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-d.svg',
-//     'submenu.normalIcon.name': 'icon-d',
-//     'submenu.activeIcon.path': '/wp-content/themes/dynamix-wp/dist/images/svg/tui-svg/icon-b.svg',
-//     'submenu.activeIcon.name': 'icon-b',
-//     'submenu.iconSize.width': '32px',
-//     'submenu.iconSize.height': '32px',
-
-//     // submenu labels
-//     'submenu.normalLabel.color': '#858585',
-//     'submenu.normalLabel.fontWeight': 'normal',
-//     'submenu.activeLabel.color': '#000',
-//     'submenu.activeLabel.fontWeight': 'normal',
-
-//     // checkbox style
-//     'checkbox.border': '1px solid #ccc',
-//     'checkbox.backgroundColor': '#fff',
-
-//     // rango style
-//     'range.pointer.color': '#333',
-//     'range.bar.color': '#ccc',
-//     'range.subbar.color': '#606060',
-
-//     'range.disabledPointer.color': '#d3d3d3',
-//     'range.disabledBar.color': 'rgba(85,85,85,0.06)',
-//     'range.disabledSubbar.color': 'rgba(51,51,51,0.2)',
-
-//     'range.value.color': '#000',
-//     'range.value.fontWeight': 'normal',
-//     'range.value.fontSize': '11px',
-//     'range.value.border': '0',
-//     'range.value.backgroundColor': '#f5f5f5',
-//     'range.title.color': '#000',
-//     'range.title.fontWeight': 'lighter',
-
-//     // colorpicker style
-//     'colorpicker.button.border': '0px',
-//     'colorpicker.title.color': '#000',
-// };
+// var ImageEditor = require('tui-image-editor');
+import * as MyImageEditor from '../libs/image-editor/imgeditor';
 import axios from 'axios';
 import Swiper from 'swiper';
 import { MoreHorizontalIcon,ChevronUpIcon,ChevronDownIcon } from 'vue-feather-icons';
@@ -255,6 +196,7 @@ export default {
         confirmdelete :false,
         fileList:[],
         swiper_medias: null,
+        myedit:null,
         visibleeditor: false,
         imgtoedit:null,
   }),
@@ -304,38 +246,11 @@ export default {
       let self = this;
       if(val){
         this.$nextTick(function () {
-          var ImageEditor = require('tui-image-editor');
-          var instance = new ImageEditor(document.querySelector('#tui-image-editor'), {
-              cssMaxWidth: 700,
-              cssMaxHeight: 500,
-              selectionStyle: {
-                  cornerSize: 20,
-                  rotatingPointOffset: 70,
-              },
-          });
-          instance.loadImageFromURL(self.imgtoedit, 'My sample image')
-          // var ImageEditor = require('tui-image-editor');
-          // // var whiteTheme = require('tui-image-editor/examples/js/theme/white-theme.js');
-          // new ImageEditor(document.querySelector('#tui-image-editor'), {
-          //     includeUI: {
-          //         loadImage: {
-          //             path: self.imgtoedit,
-          //             // path: 'http://dynamix.develop/wp-content/uploads/2018/09/s-jobs.jpg',
-          //             // path: null,
-          //             name: 'SampleImage',
-          //         },
-          //         theme: whiteTheme, // or whiteTheme
-          //         initMenu: 'filter',
-          //         menuBarPosition: 'right',
-          //     },
-          //     cssMaxWidth: 700,
-          //     cssMaxHeight: 500,
-          //     selectionStyle: {
-          //         cornerSize: 20,
-          //         rotatingPointOffset: 70,
-          //     },
-          // });
+          this.myedit = MyImageEditor.init({el: self.$refs.tuieditor,imgurl: 'https://cdn-images-1.medium.com/max/2000/1*7ZdX-pXxmBZuFtEZqeiWGA.jpeg'});
+          console.log(self.myedit);
         });
+      } else {
+          MyImageEditor.destroy();
       }
     },
   },    
@@ -442,6 +357,9 @@ export default {
     renderlayout(){
       console.log('test');
       this.$redrawVueMasonry();
+    },
+    imgCorp(){
+      this.myedit.startDrawingMode('CROPPER');
     },
   },
   computed: {
