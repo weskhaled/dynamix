@@ -21,11 +21,17 @@
         }
     }
 }
-
+body.folded{
+    .dynamix{
+        .el-dialog__wrapper {
+            left: 35px; 
+        }
+    }
+}
 .dynamix{
     .el-dialog__wrapper {
         top: 32px;
-        left: 35px;
+        left: 160px;
         z-index: 999999;
         .el-dialog{
             margin: 0 auto;
