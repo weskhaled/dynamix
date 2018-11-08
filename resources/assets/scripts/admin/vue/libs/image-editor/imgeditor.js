@@ -1,7 +1,7 @@
 var ImageEditor = require('tui-image-editor');
 let instance = false;
 export function init(options) {
-    console.log(options);
+    // console.log(options);
     instance = new ImageEditor(options.el, {
         cssMaxWidth: 700,
         cssMaxHeight: 500,
@@ -19,6 +19,6 @@ export function init(options) {
     else return false; 
 }
 export function destroy() {
-    console.log(instance);
+    // console.log(instance);
     if(instance) instance.destroy();
 }

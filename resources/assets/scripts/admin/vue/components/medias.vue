@@ -140,43 +140,63 @@
         </el-row>
     </el-dialog>
     <!-- dialog -->
-    <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview">
-        <el-row style="margin: -30px -20px">
-          <el-container>
-            <el-header height="45px">Header</el-header>
-            <el-container>
-              <el-aside width="auto">
-                <el-menu default-active="0" class="el-menu-vertical-demo" :collapse="true">
-                  <el-menu-item index="2" @click="imgCorp()">
-                    <crop-icon></crop-icon>
-                    <span slot="title">Crop Image</span>
-                  </el-menu-item>
-                  <el-menu-item index="3">
-                    <i class="el-icon-document"></i>
-                    <span slot="title">Navigator Three</span>
-                  </el-menu-item>
-                  <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">Navigator Four</span>
-                  </el-menu-item>
-                </el-menu>
-              </el-aside>
-              <el-main>
-                <div class="image-editor-wrap" style="height: 100%;">
-                  <div id="image-editor" class="image-editor-container right" style="height: 100%;max-height: 100%;overflow: auto;">
-                    <div class="image-editor-controls">
-                    </div>
-                    <div class="image-editor-main-container" style="height: 100%">
-                        <div class="tui-image-editor" ref="tuieditor" @keyup.enter="enterConfirm()" tabindex="1" style="height: 100%">
-                      </div>
-                    </div>
+    <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview" class="img-editor">
+      <el-container>
+        <el-aside width="auto">
+          <el-menu default-active="0" class="el-menu-vertical-demo" :collapse="true">
+            <el-menu-item index="1" @click="imgCorp()">
+              <crop-icon></crop-icon>
+              <span slot="title">Crop Image</span>
+            </el-menu-item>
+            <el-menu-item index="2" @click="showrotatemenu = true">
+              <rotate-cw-icon></rotate-cw-icon>
+              <span slot="title">Rotate</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              <span slot="title">Navigator Four</span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-container>
+          <el-header height="auto">
+            <div v-show="showrotatemenu">
+                <div class="img-menurotate clearfix d-flex bd-highlight my-2 py-0">
+                  <div class="mr-auto bd-highlight" style="width:33%;">
+                      <el-slider
+                          v-model="imtoedit.rotatevalue"
+                          show-input
+                          :min="-360"
+                          :max="360"
+                          input-size="small"
+                          @change="changeimgrotate">
+                      </el-slider>
                   </div>
-                  <!-- <div id="tui-image-editor" ref="tuieditor" style="height: calc(100vh - 85px)"></div> -->
+                  <div class="img-shortaction action bd-highlight d-flex">
+                      <el-button-group class="d-flex align-items-center">
+                          <el-button size="small" type="primary" icon="el-icon-edit"></el-button>
+                          <el-button size="small" type="primary" icon="el-icon-share"></el-button>
+                          <el-button size="small" type="primary" icon="el-icon-delete"></el-button>
+                      </el-button-group>
+                  </div> 
                 </div>
-              </el-main>
-            </el-container>
-          </el-container>
-        </el-row>
+            </div>
+          </el-header>
+          <el-main>
+            <div class="image-editor-wrap" style="height: 100%;">
+              <div id="image-editor" class="image-editor-container right" style="height: 100%;max-height: 100%;overflow: auto;">
+                <div class="image-editor-controls">
+                </div>
+                <div class="image-editor-main-container" style="height: 100%">
+                    <div class="tui-image-editor" ref="tuieditor" @keyup.enter="enterConfirm()" tabindex="1" style="height: 100%">
+                  </div>
+                </div>
+              </div>
+              <!-- <div id="tui-image-editor" ref="tuieditor" style="height: calc(100vh - 85px)"></div> -->
+            </div>
+          </el-main>
+        </el-container>
+      </el-container>
     </el-dialog>
 </div>  
 </template>
@@ -191,6 +211,7 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
   CropIcon,
+  RotateCwIcon,
   } from 'vue-feather-icons';
 // import $ from 'jquery';
 export default {
@@ -200,6 +221,7 @@ export default {
     ChevronUpIcon,
     ChevronDownIcon,
     CropIcon,
+    RotateCwIcon,
   },
   data: () => ({
       // reactive data property of the component.
@@ -218,6 +240,10 @@ export default {
         myedit:null,
         visibleeditor: false,
         imgtoedit:null,
+        showrotatemenu:false,
+        imtoedit:{
+          rotatevalue : 0,
+        },
   }),
   watch : {
     visible : function (val) {
@@ -271,6 +297,14 @@ export default {
       } else {
           MyImageEditor.destroy();
       }
+    },
+    'imtoedit.rotatevalue' : function(val) {
+      let self = this;
+      // if(val){
+        Message.closeAll();
+        self.myedit.stopDrawingMode();
+        self.myedit.setAngle(parseInt(val, 10)).catch(() => {});
+      // }
     },
   },    
   methods: {
@@ -379,36 +413,52 @@ export default {
     },
     imgCorp(){
       let self = this;
-      self.myedit.stopDrawingMode();
-      self.myedit.startDrawingMode('CROPPER');
-      self.$message({
-        showClose: true,
-        message: 'Press Enter to Save Corps.',
-        duration: 0,
-      });
+      // console.log(self.myedit.getDrawingMode());
+      self.showrotatemenu = false;
+      if (self.myedit.getDrawingMode() === 'NORMAL') {
+        self.myedit.startDrawingMode('CROPPER');
+        self.$message({
+          showClose: true,
+          message: 'Press Enter to Save Corps.',
+          duration: 0,
+        });
+      } else {
+        Message.closeAll();
+        self.myedit.stopDrawingMode();
+      }
     },
     enterConfirm (){
       let self = this;
-      console.log(Message);
-      if (self.myedit.getDrawingMode() === 'CROPPER') {
-        console.log('yes mode ',self.myedit);
-        self.$confirm('This will permanently Corp the image. Continue?', 'Warning', {
-          confirmButtonText: 'Yep',
-          cancelButtonText: 'No',
-          type: 'warning',
-        }).then(() => {
-          self.myedit.crop(self.myedit.getCropzoneRect()).then(() => {
-              self.myedit.stopDrawingMode();
+        Message.closeAll();
+        let rec = (self.myedit.getDrawingMode() === 'CROPPER' && self.myedit.getCropzoneRect()) ? self.myedit.getCropzoneRect() : false;
+        self.myedit.stopDrawingMode();
+        if (rec) {
+          self.$confirm('This will permanently Corp the image. Continue?', 'Warning', {
+            confirmButtonText: 'Yep',
+            cancelButtonText: 'No',
+            type: 'warning',
+          }).then(() => {
+            self.myedit.crop(rec).then(() => {
+                self.myedit.stopDrawingMode();
+                self.myedit.startDrawingMode('CROPPER');
+            });
+          }).catch(() => {
+            self.myedit.stopDrawingMode();
+            self.myedit.startDrawingMode('CROPPER');
+            self.$message({
+              showClose: true,
+              type: 'info',
+              message: 'Corp canceled',
+            });
           });
-        }).catch(() => {
+        } else {
           self.myedit.stopDrawingMode();
-          self.$message({
-            showClose: true,
-            type: 'info',
-            message: 'Corp canceled',
-          });
-        });
-      }
+        }
+    },
+    changeimgrotate(val){
+      console.log(val);
+      // this.myedit.rotate(val);
+      // this.myedit.setAngle(parseInt(val, 10)).catch(() => {});
     },
   },
   computed: {
