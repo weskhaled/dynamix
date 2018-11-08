@@ -142,28 +142,40 @@
     <!-- dialog -->
     <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview">
         <el-row style="margin: -30px -20px">
-          <div class="image-editor-wrap" style="height: calc(100vh - 85px)">
-            <div id="image-editor" class="image-editor-container right" style="height: 100%;max-height: 100%;overflow: auto;">
-              <div class="image-editor-controls row">
-                  <div class="col ml-auto">
-                      <el-dropdown size="small" split-button type="danger" @click="imgCorp()">
-                        Actions
-                        <el-dropdown-menu slot="dropdown">
-                         <el-dropdown-item>Action 1</el-dropdown-item>
-                         <el-dropdown-item>Action 2</el-dropdown-item>
-                         <el-dropdown-item>Action 3</el-dropdown-item>
-                         <el-dropdown-item>Action 4</el-dropdown-item>
-                        </el-dropdown-menu>
-                      </el-dropdown>
+          <el-container>
+            <el-header height="45px">Header</el-header>
+            <el-container>
+              <el-aside width="auto">
+                <el-menu default-active="0" class="el-menu-vertical-demo" :collapse="true">
+                  <el-menu-item index="2" @click="imgCorp()">
+                    <crop-icon></crop-icon>
+                    <span slot="title">Crop Image</span>
+                  </el-menu-item>
+                  <el-menu-item index="3">
+                    <i class="el-icon-document"></i>
+                    <span slot="title">Navigator Three</span>
+                  </el-menu-item>
+                  <el-menu-item index="4">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">Navigator Four</span>
+                  </el-menu-item>
+                </el-menu>
+              </el-aside>
+              <el-main>
+                <div class="image-editor-wrap" style="height: 100%;">
+                  <div id="image-editor" class="image-editor-container right" style="height: 100%;max-height: 100%;overflow: auto;">
+                    <div class="image-editor-controls">
                     </div>
-              </div>
-              <div class="image-editor-main-container" style="height: 100%">
-                  <div class="tui-image-editor" ref="tuieditor" tabindex="1" style="height: 100%">
+                    <div class="image-editor-main-container" style="height: 100%">
+                        <div class="tui-image-editor" ref="tuieditor" @keyup.enter="enterConfirm()" tabindex="1" style="height: 100%">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div id="tui-image-editor" ref="tuieditor" style="height: calc(100vh - 85px)"></div> -->
                 </div>
-              </div>
-            </div>
-            <!-- <div id="tui-image-editor" ref="tuieditor" style="height: calc(100vh - 85px)"></div> -->
-          </div>
+              </el-main>
+            </el-container>
+          </el-container>
         </el-row>
     </el-dialog>
 </div>  
@@ -173,7 +185,13 @@
 import * as MyImageEditor from '../libs/image-editor/imgeditor';
 import axios from 'axios';
 import Swiper from 'swiper';
-import { MoreHorizontalIcon,ChevronUpIcon,ChevronDownIcon } from 'vue-feather-icons';
+import { Message } from 'element-ui';
+import { 
+  MoreHorizontalIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
+  CropIcon,
+  } from 'vue-feather-icons';
 // import $ from 'jquery';
 export default {
   name: "Section",
@@ -181,6 +199,7 @@ export default {
     MoreHorizontalIcon,
     ChevronUpIcon,
     ChevronDownIcon,
+    CropIcon,
   },
   data: () => ({
       // reactive data property of the component.
@@ -360,21 +379,36 @@ export default {
     },
     imgCorp(){
       let self = this;
-      this.myedit.startDrawingMode('CROPPER');
-      this.$refs.tuieditor.addEventListener('keypress', function (e) {
-        // do something
-        console.log(e);
-        var key = e.which || e.keyCode;
-        if (key === 13) { // 13 is enter
-          // code for enter
-          console.log(key);
+      self.myedit.stopDrawingMode();
+      self.myedit.startDrawingMode('CROPPER');
+      self.$message({
+        showClose: true,
+        message: 'Press Enter to Save Corps.',
+        duration: 0,
+      });
+    },
+    enterConfirm (){
+      let self = this;
+      console.log(Message);
+      if (self.myedit.getDrawingMode() === 'CROPPER') {
+        console.log('yes mode ',self.myedit);
+        self.$confirm('This will permanently Corp the image. Continue?', 'Warning', {
+          confirmButtonText: 'Yep',
+          cancelButtonText: 'No',
+          type: 'warning',
+        }).then(() => {
           self.myedit.crop(self.myedit.getCropzoneRect()).then(() => {
               self.myedit.stopDrawingMode();
-              // resizeEditor();
-              self.$refs.tuieditor.removeEventListener('keypress',function(){ return false; });
           });
-        }
-      });
+        }).catch(() => {
+          self.myedit.stopDrawingMode();
+          self.$message({
+            showClose: true,
+            type: 'info',
+            message: 'Corp canceled',
+          });
+        });
+      }
     },
   },
   computed: {

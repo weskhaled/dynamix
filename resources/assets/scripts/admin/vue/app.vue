@@ -99,7 +99,7 @@
               </el-menu-item>
             </el-menu>
     </el-aside>
-    <el-main :style="[isCollapse ? {'margin-left': '64px','transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'margin-left': '200px','transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'},{'height': 'calc(100vh - 82px)'}]">
+    <el-main :style="[isCollapse ? {'transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
       <div class="pl-0 pr-0 pt-2 pb-2">
         <router-view></router-view>
       </div>
