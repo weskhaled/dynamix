@@ -140,7 +140,7 @@
         </el-row>
     </el-dialog>
     <!-- dialog -->
-    <el-dialog width="98%" top="5px" :visible.sync="visibleeditor" title="Image Preview" class="img-editor">
+    <el-dialog width="98%" :close-on-press-escape="false" :close-on-click-modal="false" top="5px" :visible.sync="visibleeditor" title="Image Preview" class="img-editor">
       <el-container>
         <el-aside width="auto">
           <el-menu default-active="0" class="el-menu-vertical-demo" :collapse="true">
@@ -160,10 +160,11 @@
         </el-aside>
         <el-container>
           <el-header height="auto">
-            <div v-show="showrotatemenu">
-                <div class="img-menurotate clearfix d-flex bd-highlight my-2 py-0">
-                  <div class="mr-auto bd-highlight" style="width:33%;">
-                      <el-slider
+            <div>
+                <div class="img-menurotate clearfix d-flex bd-highlight">
+                  <div class="mr-auto bd-highlight d-flex align-items-center" :style="[{'width':'33%'}, {'opacity' : showrotatemenu ? '1' : '0'} ,{'visibility': showrotatemenu ? 'visible' : 'hidden'}]">
+                      <el-slider 
+                          style="width: 100%;"
                           v-model="imtoedit.rotatevalue"
                           show-input
                           :min="-360"
@@ -172,11 +173,20 @@
                           @change="changeimgrotate">
                       </el-slider>
                   </div>
-                  <div class="img-shortaction action bd-highlight d-flex">
+                  <div class="img-shortaction action bd-highlight d-flex my-2">
                       <el-button-group class="d-flex align-items-center">
-                          <el-button size="small" type="primary" icon="el-icon-edit"></el-button>
-                          <el-button size="small" type="primary" icon="el-icon-share"></el-button>
-                          <el-button size="small" type="primary" icon="el-icon-delete"></el-button>
+                          <el-button size="small" type="primary">
+                            <arrow-left-icon></arrow-left-icon>
+                          </el-button>
+                          <el-button size="small" type="primary">
+                            <arrow-right-icon></arrow-right-icon>
+                          </el-button>
+                          <el-button size="small" type="primary">
+                            <arrow-left-icon></arrow-left-icon>
+                          </el-button>
+                          <el-button size="small" type="primary">
+                            <refresh-ccw-icon></refresh-ccw-icon>
+                          </el-button>
                       </el-button-group>
                   </div> 
                 </div>
@@ -188,7 +198,7 @@
                 <div class="image-editor-controls">
                 </div>
                 <div class="image-editor-main-container" style="height: 100%">
-                    <div class="tui-image-editor" ref="tuieditor" @keyup.enter="enterConfirm()" tabindex="1" style="height: 100%">
+                    <div class="tui-image-editor" ref="tuieditor" @keyup.enter="enterConfirm()" @keyup.esc="reseteditmode()" tabindex="1" style="height: 100%">
                   </div>
                 </div>
               </div>
@@ -212,6 +222,9 @@ import {
   ChevronDownIcon,
   CropIcon,
   RotateCwIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  RefreshCcwIcon,
   } from 'vue-feather-icons';
 // import $ from 'jquery';
 export default {
@@ -222,6 +235,9 @@ export default {
     ChevronDownIcon,
     CropIcon,
     RotateCwIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    RefreshCcwIcon,
   },
   data: () => ({
       // reactive data property of the component.
@@ -459,6 +475,9 @@ export default {
       console.log(val);
       // this.myedit.rotate(val);
       // this.myedit.setAngle(parseInt(val, 10)).catch(() => {});
+    },
+    reseteditmode() {
+      this.myedit.stopDrawingMode();
     },
   },
   computed: {

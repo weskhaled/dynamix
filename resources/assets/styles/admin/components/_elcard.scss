@@ -56,6 +56,13 @@ body.folded{
                         height: 100%;
                         .el-header{
                             background-color: #f7f7f7;
+                            .el-button{
+                                padding: 5px 10px;
+                                svg{
+                                    width: 22px;
+                                    height: 22px;
+                                }
+                            }
                         }
                         .el-aside{
                             .el-menu{
