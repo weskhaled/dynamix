@@ -1,4 +1,5 @@
 var ImageEditor = require('tui-image-editor');
+// import { ImageEditor } from 'tui-image-editor';
 let instance = false;
 export function init(options) {
     // console.log(options);
