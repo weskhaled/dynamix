@@ -56,6 +56,8 @@ body.folded{
             padding: 0;
             margin-left: 0px;
             background: white;
+            overflow-y: auto;
+            max-height: calc(100vh - 82px);
         }
     }
 }

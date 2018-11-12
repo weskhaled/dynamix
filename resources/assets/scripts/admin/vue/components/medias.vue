@@ -148,15 +148,15 @@
               <crop-icon></crop-icon>
               <span slot="title">Crop Image</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="showrotatemenu = !showrotatemenu;showimgflipmenu = false;">
+            <el-menu-item index="2" @click="imtoedit.rotate.toggle = !imtoedit.rotate.toggle;">
               <rotate-cw-icon></rotate-cw-icon>
               <span slot="title">Rotate</span>
             </el-menu-item>
-            <el-menu-item index="3" @click="showimgflipmenu = !showimgflipmenu;showrotatemenu = false;">
+            <el-menu-item index="3" @click="imtoedit.flip.toggle = !imtoedit.flip.toggle;">
                 <square-icon></square-icon>
               <span slot="title">Flip</span>
             </el-menu-item>
-            <el-menu-item index="4" @click="imtoedit.text.togglemenu = !imtoedit.text.togglemenu;if(myedit.getDrawingMode() !== 'TEXT'){ myedit.stopDrawingMode();myedit.startDrawingMode('TEXT'); }">
+            <el-menu-item index="4" @click="imtoedit.text.toggle = !imtoedit.text.toggle;if(myedit.getDrawingMode() !== 'TEXT'){ myedit.stopDrawingMode();myedit.startDrawingMode('TEXT'); }">
                 <type-icon></type-icon>
                 <span slot="title">Type</span>
             </el-menu-item>
@@ -170,7 +170,7 @@
           <el-header height="auto">
             <div>
                 <div class="clearfix d-flex bd-highlight justify-content-end">
-                  <div class="mr-auto bd-highlight d-flex align-items-center" v-if="showrotatemenu" :style="[{'width':'33%'}, {'opacity' : showrotatemenu ? '1' : '0'}]">
+                  <div class="mr-auto bd-highlight d-flex align-items-center" v-if="imtoedit.rotate.toggle" :style="[{'width':'33%'}]">
                       <el-slider 
                           style="width: 100%;"
                           v-model="imtoedit.rotatevalue"
@@ -181,7 +181,7 @@
                           @change="changeimgrotate">
                       </el-slider>
                   </div>
-                  <div class="mr-auto bd-highlight d-flex align-items-center" v-if="showimgflipmenu"  :style="[{'width':'33%'}, {'opacity' : showimgflipmenu ? '1' : '0'}]">
+                  <div class="mr-auto bd-highlight d-flex align-items-center" v-if="imtoedit.flip.toggle"  :style="[{'width':'33%'}]">
                       <el-button size="medium" class="flip-x"  @click="myedit.flipX();">
                           <maximize-icon class="flip-x"></maximize-icon>
                       </el-button>
@@ -189,7 +189,7 @@
                           <maximize-icon></maximize-icon>
                       </el-button>
                   </div>
-                  <div class="text-menu mr-auto bd-highlight d-flex align-items-center" v-if="imtoedit.text.togglemenu">
+                  <div class="text-menu mr-auto bd-highlight d-flex align-items-center" v-if="imtoedit.text.toggle">
                     <div class="color-overlay">
                       <el-popover
                         placement="bottom"
@@ -516,6 +516,19 @@ export default {
           btnundodisabled: true,
           btnredodisabled: true,
           showimgeditor: false,
+          crops:{
+            toggle: false,
+            value: 0,
+          },
+          rotate:{
+            toggle: false,
+            value: 0,
+          },
+          flip:{
+            toggle: false,
+            flipx: false,
+            flipy: false,
+          },
           gfilters:[
             {
               name: 'Grayscale' ,
@@ -606,7 +619,6 @@ export default {
           },
           text: {
             toggle: false,
-            togglemenu: false,
             togglecolor: false,
             color: {
               hex8: '#00aaff',
@@ -683,12 +695,22 @@ export default {
             addText: function(pos) {
               self.myedit.addText('Double Click to Add Text', {
                   position: pos.originPosition,
+                  styles: {
+                    'fill': self.imtoedit.text.color.hex8,
+                    'fontFamily': 'Raleway',
+                  },
               }).then(objectProps => {
                   console.log(objectProps);
               });
             },
             objectActivated: function(obj) {
               self.imtoedit.activeObjectId = obj.id;
+              if (obj.type === 'text') {
+                self.imtoedit.text.toggle = true;
+                self.imtoedit.text.toggle = true;
+                self.imtoedit.text.toggle = true;
+                self.imtoedit.text.color.hex8 = obj.fill;
+              }
               // if (obj.type === 'rect' || obj.type === 'circle' || obj.type === 'triangle') {
               //     showSubMenu('shape');
               //     setShapeToolbar(obj);
