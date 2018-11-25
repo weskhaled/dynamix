@@ -53,10 +53,10 @@
         </el-card>
       </el-col>
       <el-col :span="8" :sm="24" :md="12" :lg="6" class="grid-item text-center" v-masonry-tile v-for="(media, index) in allmedias" :key="index">
-        <el-card :class="!(closedmediacard.indexOf(media.id) === -1) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
-          <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
+        <el-card :class="!(closedmediacard.indexOf(media.id) === -1) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover">
+          <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1" :style="[!!(checkedmedia.find(item => item === media.id)) ? {'background': '#f5f7fa'} : {}]">
               <div class="mr-auto bd-highlight">
-                <el-checkbox class="d-inline mr-1" @change="Checkmedia(media.id)" :checked="!!(!checkedmedia.indexOf(media.id) === -1)"></el-checkbox><h4 class="d-inline">{{media.name}}</h4>
+                <el-checkbox class="d-inline mr-1" @change="Checkmedia(media.id)" :key="media.id" :checked="!!(checkedmedia.find(item => item === media.id))"></el-checkbox><h4 class="d-inline">{{media.name}}-{{media.id}}</h4>
               </div>
               <div class="action bd-highlight">
                 <el-tooltip content="Actions" placement="top">
@@ -452,7 +452,6 @@ import axios from 'axios';
 import Swiper from 'swiper';
 import { Message } from 'element-ui';
 import { Chrome } from 'vue-color';
-import { store } from '../../store';
 import { 
   MoreHorizontalIcon,
   ChevronUpIcon,
@@ -504,7 +503,8 @@ export default {
         visible : false,
         closedcard :false,
         closedmediacard : [],
-        checkedmedia:[],
+        checkedmedia: [],
+        checkedmedialist: [],
         viewimg: null,
         confirmdelete :false,
         fileList:[],
@@ -768,16 +768,14 @@ export default {
       self.reDraw();
     },
     Checkmedia(id){
-      let self = this ; 
-      this.allmedias.map(media => {
-        if(media.id == id){
-          if(self.checkedmedia.indexOf(id) === -1){
-            self.checkedmedia.push(media.id);
-          } else {
-            self.checkedmedia.splice(self.checkedmedia.indexOf(media.id), 1)
-          }
-        }
-      });
+      let self = this ;
+      if(self.checkedmedia.find(item => item === id)) {
+        self.checkedmedia.splice(self.checkedmedia.indexOf(id), 1);
+        this.$store.dispatch('medias/spliceMedia', id)
+      } else {
+        self.checkedmedia.push(id);
+        this.$store.dispatch('medias/pushMedia', id)
+      }
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -1001,8 +999,15 @@ export default {
   computed: {
   },
   mounted: function() {
-    store.commit('increment');
+    // let self = this;
+    this.$store.commit('increment');
     // console.log(store.state.count);
+    // this.$store.dispatch('medias/getLocalMedias');
+    // // this.checkedmedia = this.$store.state.medias.medias;
+    // localStorage.getItem('medias').map(item => {
+    //   self.checkedmedia.push(item.id);
+    // })
+    // console.log(this.$store.state.medias.medias);
     this.$root.$on('redrawVueMasonry', () => {
         this.reDraw();
     })

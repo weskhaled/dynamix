@@ -15,13 +15,13 @@ import App from './vue/app.vue';
 // const App = {name:'app', template: '<div id="app"><router-view></router-view></div>'};
 import router from './router';
 
-// import { store } from '../store';
+import { store } from './store';
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#appadmin',
-  // store: store,
+  store,
   router,
   template: '<App/>',
   components: { App },

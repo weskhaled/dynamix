@@ -110,7 +110,7 @@
 </template>
 <script>
 import axios from 'axios';
-import { store } from '../store';
+// import { store } from '../store';
 import {
    UsersIcon,
    FileIcon,
@@ -125,7 +125,7 @@ import {
       },
       computed: {
         count () {
-          return store.state.count
+          return this.$store.state.count
         },
       },
       data: () => ({
@@ -164,11 +164,11 @@ import {
           })  
         },
         increment(){
-          store.commit('increment')
-          console.log(store.state.count)
+          this.$store.commit('increment')
+          console.log(this.$store.state.count)
         },
         decrement(){
-          store.commit('decrement')
+          this.$store.commit('decrement')
         },
       },
       mounted(){
