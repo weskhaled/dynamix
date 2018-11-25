@@ -1,6 +1,6 @@
 <template>
 <div class="container-fluid">
-    <el-row :gutter="15" class="mt-3 mb-3">
+    <el-row :gutter="15" class="pt-3 mb-3">
       <el-col :span="24">
           <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>

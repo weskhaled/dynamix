@@ -10,8 +10,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="ml-2">
-              <el-dropdown size="small" split-button type="danger">
-                Actions
+              <el-dropdown size="small" split-button type="danger" @click="increment">
+                Actions {{ count }}
                 <el-dropdown-menu slot="dropdown">
                  <el-dropdown-item>Action 1</el-dropdown-item>
                  <el-dropdown-item>Action 2</el-dropdown-item>
@@ -100,7 +100,7 @@
             </el-menu>
     </el-aside>
     <el-main :style="[isCollapse ? {'transition': '.25s margin-left cubic-bezier(0.4, 0, 1, 1)'} : {'transition': '.2s margin-left cubic-bezier(0.4, 0, 1, 1)'}]">
-      <div class="pl-0 pr-0 pt-2 pb-2">
+      <div class="p-0">
         <router-view></router-view>
       </div>
     </el-main>
@@ -110,6 +110,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { store } from '../store';
 import {
    UsersIcon,
    FileIcon,
@@ -121,6 +122,11 @@ import {
         UsersIcon,
         FileIcon,
         SettingsIcon,
+      },
+      computed: {
+        count () {
+          return store.state.count
+        },
       },
       data: () => ({
          isCollapse: true,
@@ -156,6 +162,13 @@ import {
             }
             console.log(response.data);
           })  
+        },
+        increment(){
+          store.commit('increment')
+          console.log(store.state.count)
+        },
+        decrement(){
+          store.commit('decrement')
         },
       },
       mounted(){

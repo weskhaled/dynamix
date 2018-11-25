@@ -1,6 +1,6 @@
 <template>
-<div class="container-fluid">     
-    <el-row :gutter="15" class="mt-3 mb-3">
+<div class="container-fluid" v-loading.lock="fullscreenLoading" element-loading-background="rgba(255, 255, 255, 0.8)" :style="[fullscreenLoading ? {'min-height': 'calc(100vh - 82px)','max-height': 'calc(100vh - 82px)'} : {}]">     
+    <el-row :gutter="15" class="pt-3 mb-3">
       <el-col :span="24">
           <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>
@@ -23,7 +23,7 @@
     </el-row>
     <el-row :gutter="0" class="media-imgs grid" ref="grid" v-masonry transition-duration="0.3s" item-selector=".grid-item">
       <el-col :span="8" :sm="24" :md="12" :lg="6" class="grid-item text-center" v-masonry-tile>
-        <el-card :class="closedcard ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
+        <el-card :class="closedcard ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="disabled">
           <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
               <div class="mr-auto bd-highlight">
                   <h4>Add new</h4>
@@ -43,6 +43,8 @@
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :file-list="fileList"
+            :show-file-list="false"
+            :before-upload="()=>{fullscreenLoading = true}"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
@@ -54,7 +56,7 @@
         <el-card :class="!(closedmediacard.indexOf(media.id) === -1) ? 'closed' : ''" class="d-block p-0 mr-1 mb-1" data-width="1" data-height="1" shadow="hover" style="">
           <div slot="header" class="clearfix d-flex bd-highlight px-2 py-1">
               <div class="mr-auto bd-highlight">
-                  <h4>{{media.name}}</h4>
+                <el-checkbox class="d-inline mr-1" @change="Checkmedia(media.id)" :checked="!!(!checkedmedia.indexOf(media.id) === -1)"></el-checkbox><h4 class="d-inline">{{media.name}}</h4>
               </div>
               <div class="action bd-highlight">
                 <el-tooltip content="Actions" placement="top">
@@ -82,15 +84,15 @@
               <img :src="media.url" class="img-fluid img-fancy" :alt="media.name" @click="viewimg = index;visible = true;" >
               <figcaption>
                 <div class="row m-0">
-                  <div class="col-sm-7 p-0">
+                  <!-- <div class="col-sm-7 p-0">
                     <h2>{{media.name}}</h2>
-                  </div>
-                  <div class="col-sm-5 p-0">
+                  </div> -->
+                  <div class="col-sm-12 p-0">
                     <div class="icon-links pull-right text-center">
                       <el-button class="ml-1" size="mini" type="primary" circle>
                         <i class="fa fa-eye"></i>
                       </el-button>
-                      <el-button class="ml-1" @click="imgtoedit = media.url;visibleeditor = true;" size="mini" type="info" circle>
+                      <el-button class="ml-1" @click="imgtoedit = media;visibleeditor = true;" size="mini" type="info" circle>
                         <i class="fa fa-edit"></i>
                       </el-button>
                       <el-button class="ml-1" @click="ConfirmDelete(media)" size="mini" type="danger" circle>
@@ -128,14 +130,14 @@
               <div class="swiper-pagination"></div>
 
               <!-- If we need navigation buttons -->
-                <nav class="">
-                    <a class="prev text-right" href="javascript:void(0)">
-                        <span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
-                    </a>
-                    <a class="next text-left" href="javascript:void(0)">
-                        <span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
-                    </a>
-                </nav>
+              <nav class="">
+                  <a class="prev text-right" href="javascript:void(0)">
+                      <span class="icon-wrap"><i class="icon fa fa-angle-left"></i></span>
+                  </a>
+                  <a class="next text-left" href="javascript:void(0)">
+                      <span class="icon-wrap"><i class="icon fa fa-angle-right"></i></span>
+                  </a>
+              </nav>
             </div>
         </el-row>
     </el-dialog>
@@ -208,17 +210,17 @@
                   </div>
                   <div class="action bd-highlight d-flex my-2">
                       <el-button-group class="d-flex align-items-center">
-                          <el-tooltip content="Undo" placement="top">
+                          <el-tooltip content="Undo" placement="bottom">
                               <el-button size="small" type="primary" @click="myedit.undo();imtoedit.gfilters.map(x => {x.selected = myedit.hasFilter(x.val);});" :disabled="imtoedit.btnundodisabled">
                                 <arrow-left-icon></arrow-left-icon>
                               </el-button>
                           </el-tooltip>
-                          <el-tooltip content="Redo" placement="top">
+                          <el-tooltip content="Redo" placement="bottom">
                             <el-button size="small" type="primary" @click="myedit.redo();imtoedit.gfilters.map(x => {x.selected = myedit.hasFilter(x.val);});" :disabled="imtoedit.btnredodisabled">
                               <arrow-right-icon></arrow-right-icon>
                             </el-button>
                           </el-tooltip>
-                          <el-tooltip content="Reset" placement="top">
+                          <el-tooltip content="Reset" placement="bottom">
                             <el-button size="small" type="primary" @click="myedit.clearObjects().then((status => {myedit.clearRedoStack();myedit.clearUndoStack();}));">
                               <check-icon></check-icon>
                             </el-button>
@@ -231,14 +233,14 @@
                         :multiple="false"
                         :auto-upload="false"
                         :limit="1">
-                        <el-tooltip content="Upload Image" placement="top">
+                        <el-tooltip content="Upload Image" placement="bottom">
                           <el-button size="small" type="primary">
                               <upload-icon></upload-icon>
                           </el-button>
                         </el-tooltip>
                       </el-upload>
                       <div class="ml-1 d-flex align-items-center">
-                        <el-tooltip content="Save Image" placement="top">
+                        <el-tooltip content="Save Image" placement="bottom">
                             <el-button class="" size="small" type="primary">
                                 <save-icon></save-icon>
                             </el-button>
@@ -450,6 +452,7 @@ import axios from 'axios';
 import Swiper from 'swiper';
 import { Message } from 'element-ui';
 import { Chrome } from 'vue-color';
+import { store } from '../../store';
 import { 
   MoreHorizontalIcon,
   ChevronUpIcon,
@@ -493,6 +496,7 @@ export default {
   data: () => ({
       // reactive data property of the component.
         wpApiSettings: wpApiSettings,
+        fullscreenLoading: true,
         allmedias : [],
         totalmedias: 0,
         per_page : 10,
@@ -500,6 +504,7 @@ export default {
         visible : false,
         closedcard :false,
         closedmediacard : [],
+        checkedmedia:[],
         viewimg: null,
         confirmdelete :false,
         fileList:[],
@@ -674,7 +679,8 @@ export default {
         this.$nextTick(function () {
           self.imtoedit.gfilters.map(x => {x.selected = false;});
           self.imtoedit.rotatevalue = 0;
-          this.myedit = MyImageEditor.init({el: self.$refs.tuieditor,imgurl: 'https://cdn-images-1.medium.com/max/2000/1*7ZdX-pXxmBZuFtEZqeiWGA.jpeg'});
+          // this.myedit = MyImageEditor.init({el: self.$refs.tuieditor,imgurl: 'https://cdn-images-1.medium.com/max/2000/1*7ZdX-pXxmBZuFtEZqeiWGA.jpeg'});
+          this.myedit = MyImageEditor.init({el: self.$refs.tuieditor,imgurl: self.imgtoedit.url});
           // console.log(self.myedit);
           // Attach image editor custom events
           this.myedit.on({
@@ -761,6 +767,18 @@ export default {
       });
       self.reDraw();
     },
+    Checkmedia(id){
+      let self = this ; 
+      this.allmedias.map(media => {
+        if(media.id == id){
+          if(self.checkedmedia.indexOf(id) === -1){
+            self.checkedmedia.push(media.id);
+          } else {
+            self.checkedmedia.splice(self.checkedmedia.indexOf(media.id), 1)
+          }
+        }
+      });
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -806,9 +824,11 @@ export default {
     },
     reDraw(){
       let self = this;
+      // self.fullscreenLoading = true;
       setTimeout(function () { 
         self.$nextTick(function () {
           self.$redrawVueMasonry();
+          self.fullscreenLoading = false;
         })
       } , 201);
     },
@@ -981,6 +1001,8 @@ export default {
   computed: {
   },
   mounted: function() {
+    store.commit('increment');
+    // console.log(store.state.count);
     this.$root.$on('redrawVueMasonry', () => {
         this.reDraw();
     })
