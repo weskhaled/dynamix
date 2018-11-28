@@ -39,7 +39,7 @@ add_action('admin_menu', function () {
 // });
 
 add_action('admin_enqueue_scripts', function () {
-	if($_GET["page"] == "settings")
+	if(isset($_GET["page"]) && $_GET["page"] == "settings")
 	{
 		wp_enqueue_style('sage/admin.css', asset_path('styles/admin.css'), false, null);
 		wp_enqueue_script('sage/admin.js', asset_path('scripts/admin.js'), ['jquery'], null, true);
