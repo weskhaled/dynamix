@@ -288,11 +288,11 @@ import VueApexCharts from 'vue-apexcharts';
         });
         // console.log(this.$apexcharts.exec('vuechart-example',{},true));
         // this.$apexcharts.exec('vuechart-example', 'redrawPaths');
-        setTimeout(function () { 
-           self.$apexcharts.exec('vuechart-example', 'render')
-          } , 5000);
         this.$nextTick(function () {
           // self.$apexcharts.exec('vuechart-example', 'updateSeries')
+          setTimeout(function () { 
+           self.$apexcharts.exec('vuechart-example', 'render')
+          } , 5000);
         })
       },
     }

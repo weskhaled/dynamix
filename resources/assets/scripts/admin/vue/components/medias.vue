@@ -785,7 +785,7 @@ export default {
     },
     handleSuccess(response) {
       let self = this;
-      self.allmedias = response;
+      self.allmedias = JSON.parse(JSON.stringify(response));
       this.allmedias.map(x => {
         x.closedcard = false;
       });

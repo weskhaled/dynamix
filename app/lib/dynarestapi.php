@@ -119,7 +119,7 @@ function post_logo( \WP_REST_Request $request ) {
       if (!empty($files)) {
         $upload_overrides = array( 'test_form' => false );
         foreach ($files as $key => $file) {
-          $attachment_id = media_handle_upload( $key, $challengeID );
+          $attachment_id = media_handle_upload( $key, true );
           if ( is_wp_error( $attachment_id ) ) {
             $output['status'] = 'error';
         		$output['message'] = '- The image could not be uploaded.';
@@ -174,7 +174,7 @@ function post_media( \WP_REST_Request $request ) {
       if (!empty($files)) {
         $upload_overrides = array( 'test_form' => false );
         foreach ($files as $key => $file) {
-          $attachment_id = media_handle_upload( $key, $challengeID );
+          $attachment_id = media_handle_upload( $key, true );
           if ( is_wp_error( $attachment_id ) ) {
             $output['status'] = 'error';
         		$output['message'] = '- The image could not be uploaded.';
